@@ -11,7 +11,7 @@ class PlayersCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: Get.width / 7,
+        width: Get.width / 6,
         height: 40,
         decoration: BoxDecoration(
           color: dirtyWhite,

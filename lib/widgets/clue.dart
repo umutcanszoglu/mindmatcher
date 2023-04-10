@@ -27,9 +27,11 @@ class ClueWidget extends StatelessWidget {
         ),
         const SizedBox(width: 4),
         SizedBox(
-          width: 60,
+          width: 90,
           child: MyTextField(
             controller: controller.clueCount,
+            hintText: "0",
+            prefixIcon: numberIcon,
             borderColor: white,
             keyboardType: TextInputType.number,
           ),

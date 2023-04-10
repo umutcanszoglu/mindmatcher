@@ -16,7 +16,7 @@ class TopBarWidget extends StatelessWidget {
         ResetCard(),
         SizedBox(width: 4),
         RulesCard(),
-        SizedBox(width: 22),
+        SizedBox(width: 12),
         UserCard(),
       ],
     );

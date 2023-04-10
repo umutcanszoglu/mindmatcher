@@ -12,7 +12,7 @@ class UserCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 13),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         width: Get.width / 3,
         height: 40,
         decoration: BoxDecoration(
@@ -20,9 +20,9 @@ class UserCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(32),
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text("User Name", style: FontStyles.smallButtonBlack),
-            const SizedBox(width: 4),
             avatarIcon,
           ],
         ),

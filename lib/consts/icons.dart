@@ -4,6 +4,6 @@ import 'package:mindmatcher/consts/theme.dart';
 const nicknameIcon = Icon(Icons.person, size: 25);
 const keyIcon = Icon(Icons.key_rounded, size: 25);
 const playersIcon = Icon(Icons.people_rounded, size: 25);
-const avatarIcon = Icon(Icons.circle, size: 30, color: orange);
+const avatarIcon = Icon(Icons.circle, size: 30, color: white);
 const infoIcon = Icon(Icons.info_outlined, size: 30, color: orange);
-const slidingIcon = Icon(Icons.minimize_rounded, size: 60, color: orange);
+const numberIcon = Icon(Icons.numbers_rounded, size: 30, color: orange);
