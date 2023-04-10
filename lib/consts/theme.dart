@@ -4,10 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 const purple = Color(0xff5D3891);
 const orange = Color(0xffF99417);
-const dirtyWhite = Color(0xffE8E2E2);
+const dirtyWhite = Color.fromARGB(255, 211, 211, 211);
 const white = Color(0xffF5F5F5);
 const green = Color(0xff628c36);
 const red = Color(0xffCF0A0A);
+const black = Color(0xff2D2727);
 
 class FontStyles {
   static TextStyle headers = GoogleFonts.righteous(

@@ -17,6 +17,7 @@ class MyTextField extends StatelessWidget {
     this.suffixIconColor,
     this.borderColor = orange,
     this.keyboardType,
+    this.controller,
   });
   final String? hintText;
   final Color? textColor;
@@ -31,10 +32,12 @@ class MyTextField extends StatelessWidget {
   final Color? suffixIconColor;
   final Color borderColor;
   final TextInputType? keyboardType;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       keyboardType: keyboardType,
       obscureText: isObscure,
       style: TextStyle(color: textColor),

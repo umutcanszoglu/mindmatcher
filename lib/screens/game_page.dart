@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mindmatcher/consts/theme.dart';
+import 'package:mindmatcher/controllers/clue_controller.dart';
+import 'package:mindmatcher/controllers/word_controller.dart';
 import 'package:mindmatcher/widgets/clue.dart';
 import 'package:mindmatcher/widgets/my_carousel.dart';
 import 'package:mindmatcher/widgets/my_grid.dart';
@@ -10,6 +13,9 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final wordController = Get.put(WordController());
+    final clueController = Get.put(ClueController());
+
     return Scaffold(
       backgroundColor: white,
       body: SafeArea(
@@ -17,14 +23,14 @@ class GamePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
           child: ListView(
             physics: const BouncingScrollPhysics(),
-            children: const [
-              TopBarWidget(),
-              SizedBox(height: 16),
-              Flexible(child: MyGrid()),
-              SizedBox(height: 16),
-              ClueWidget(),
-              SizedBox(height: 16),
-              MyCarousel(),
+            children: [
+              const TopBarWidget(),
+              const SizedBox(height: 32),
+              Flexible(child: MyGrid(wordModels: wordController.wordModels)),
+              const SizedBox(height: 32),
+              ClueWidget(controller: clueController),
+              const SizedBox(height: 32),
+              const MyCarousel(),
             ],
           ),
         ),
