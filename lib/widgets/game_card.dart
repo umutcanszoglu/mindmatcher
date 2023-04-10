@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:mindmatcher/consts/theme.dart';
 
-class InfoCard extends StatelessWidget {
-  const InfoCard({super.key});
+class GameCard extends StatelessWidget {
+  const GameCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      height: 50,
       decoration: BoxDecoration(
         color: dirtyWhite,
         borderRadius: BorderRadius.circular(32),
       ),
       child: Center(
-          child: Text("there is a many infos in here....", style: FontStyles.smallButtonBlack)),
+        child: Text(
+          "too many words here",
+          style: FontStyles.gameBlack,
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }

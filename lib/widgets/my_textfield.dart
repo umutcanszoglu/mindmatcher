@@ -16,6 +16,7 @@ class MyTextField extends StatelessWidget {
     this.suffixIconButton,
     this.suffixIconColor,
     this.borderColor = orange,
+    this.keyboardType,
   });
   final String? hintText;
   final Color? textColor;
@@ -29,10 +30,12 @@ class MyTextField extends StatelessWidget {
   final IconButton? suffixIconButton;
   final Color? suffixIconColor;
   final Color borderColor;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType: keyboardType,
       obscureText: isObscure,
       style: TextStyle(color: textColor),
       decoration: InputDecoration(

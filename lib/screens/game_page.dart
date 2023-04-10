@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mindmatcher/consts/theme.dart';
-import 'package:mindmatcher/widgets/info_card.dart';
-import 'package:mindmatcher/widgets/players_card.dart';
-import 'package:mindmatcher/widgets/reset_card.dart';
-import 'package:mindmatcher/widgets/rules_card.dart';
-import 'package:mindmatcher/widgets/user_card.dart';
+import 'package:mindmatcher/widgets/clue.dart';
+import 'package:mindmatcher/widgets/my_carousel.dart';
+import 'package:mindmatcher/widgets/my_grid.dart';
+import 'package:mindmatcher/widgets/top_bar.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({super.key});
@@ -15,22 +14,17 @@ class GamePage extends StatelessWidget {
       backgroundColor: white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Row(
-                children: const [
-                  PlayersCard(),
-                  SizedBox(width: 4),
-                  ResetCard(),
-                  SizedBox(width: 4),
-                  RulesCard(),
-                  SizedBox(width: 22),
-                  UserCard(),
-                ],
-              ),
-              const InfoCard(),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            children: const [
+              TopBarWidget(),
+              SizedBox(height: 16),
+              Flexible(child: MyGrid()),
+              SizedBox(height: 16),
+              ClueWidget(),
+              SizedBox(height: 16),
+              MyCarousel(),
             ],
           ),
         ),

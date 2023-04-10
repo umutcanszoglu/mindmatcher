@@ -15,7 +15,7 @@ class StartGamePage extends StatelessWidget {
       backgroundColor: white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: [
               const Spacer(),

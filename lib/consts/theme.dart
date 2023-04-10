@@ -29,6 +29,8 @@ class FontStyles {
   static TextStyle smallButtonOrange = GoogleFonts.righteous(color: orange, fontSize: 14);
   static TextStyle smallButtonBlack = GoogleFonts.righteous(color: Colors.black, fontSize: 14);
   static TextStyle smallButtonwhite = GoogleFonts.righteous(color: white, fontSize: 14);
+  static TextStyle gameBlack = GoogleFonts.righteous(color: Colors.black, fontSize: 10);
+  static TextStyle gameWhite = GoogleFonts.righteous(color: white, fontSize: 10);
   static TextStyle bodyOrange = GoogleFonts.righteous(color: orange, fontSize: 18);
   static TextStyle bodyPurple = GoogleFonts.righteous(color: purple, fontSize: 18);
   static TextStyle bodyWhite = GoogleFonts.righteous(color: white, fontSize: 18);

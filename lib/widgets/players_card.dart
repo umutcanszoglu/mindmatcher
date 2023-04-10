@@ -22,7 +22,7 @@ class PlayersCard extends StatelessWidget {
           children: [
             playersIcon,
             const SizedBox(width: 5),
-            Text("1", style: FontStyles.smallButtonBlack),
+            Text("15", style: FontStyles.smallButtonBlack),
           ],
         ),
       ),
