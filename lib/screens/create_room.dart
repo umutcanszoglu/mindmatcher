@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:mindmatcher/consts/icons.dart';
 import 'package:mindmatcher/consts/theme.dart';
-import 'package:mindmatcher/widgets/create_room_card.dart';
+import 'package:mindmatcher/screens/game_page.dart';
+import 'package:mindmatcher/widgets/my_button.dart';
+import 'package:mindmatcher/widgets/my_textfield.dart';
 
 class CreateRoomPage extends StatelessWidget {
   const CreateRoomPage({super.key});
@@ -11,12 +16,94 @@ class CreateRoomPage extends StatelessWidget {
       backgroundColor: white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.all(24.0),
           child: ListView(
             physics: const BouncingScrollPhysics(),
-            children: const [
-              SizedBox(height: 150),
-              CreateRoomCard(),
+            children: [
+              Text(
+                "CREATE ROOM",
+                style: FontStyles.headers,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 48),
+              Lottie.asset("assets/lotties/create.json"),
+              const MyTextField(
+                prefixIcon: nicknameIcon,
+                prefixIconColor: orange,
+                hintText: "username",
+                borderColor: dirtyWhite,
+              ),
+              const SizedBox(height: 32),
+              Row(
+                children: [
+                  Expanded(
+                    child: MyButton(
+                      borderColor: purple,
+                      color: white,
+                      text: "Create",
+                      height: 60,
+                      textStyle: FontStyles.buttonsPurple,
+                      onTap: () => Get.to(const GamePage()),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: MyButton(
+                      color: orange,
+                      text: "Join",
+                      height: 60,
+                      textStyle: FontStyles.buttons,
+                      onTap: () {
+                        Get.dialog(
+                          AlertDialog(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+                            actionsPadding: const EdgeInsets.only(bottom: 16, left: 24, right: 24),
+                            actionsAlignment: MainAxisAlignment.center,
+                            backgroundColor: dirtyWhite,
+                            title: Text(
+                              "Enter The Code",
+                              style: FontStyles.bodyBlack,
+                              textAlign: TextAlign.center,
+                            ),
+                            content: const MyTextField(
+                              isFilled: true,
+                              fillColor: white,
+                              prefixIcon: keyIcon,
+                              borderColor: dirtyWhite,
+                            ),
+                            actions: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: MyButton(
+                                      text: "Back",
+                                      textStyle: FontStyles.smallButtonwhite,
+                                      color: orange,
+                                      width: double.infinity,
+                                      height: 40,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: MyButton(
+                                      text: "Join",
+                                      textStyle: FontStyles.smallButtonPurple,
+                                      color: Colors.transparent,
+                                      borderColor: purple,
+                                      width: double.infinity,
+                                      height: 40,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

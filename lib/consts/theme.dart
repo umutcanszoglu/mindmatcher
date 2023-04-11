@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 const purple = Color(0xff5D3891);
 const orange = Color(0xffF99417);
-const dirtyWhite = Color.fromARGB(255, 211, 211, 211);
+const dirtyWhite = Color(0xffebebeb);
 const white = Color(0xffF5F5F5);
 const green = Color(0xff628c36);
 const red = Color(0xffCF0A0A);
@@ -26,6 +26,8 @@ class FontStyles {
   );
   static TextStyle header2 = GoogleFonts.righteous(color: purple, fontSize: 32);
   static TextStyle buttons = GoogleFonts.righteous(color: white, fontSize: 18);
+  static TextStyle buttonsOrange = GoogleFonts.righteous(color: orange, fontSize: 18);
+  static TextStyle buttonsPurple = GoogleFonts.righteous(color: purple, fontSize: 18);
   static TextStyle smallButtonPurple = GoogleFonts.righteous(color: purple, fontSize: 14);
   static TextStyle smallButtonOrange = GoogleFonts.righteous(color: orange, fontSize: 14);
   static TextStyle smallButtonBlack = GoogleFonts.righteous(color: Colors.black, fontSize: 14);

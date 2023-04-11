@@ -13,7 +13,7 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wordController = Get.put(WordController());
+    Get.put(WordController());
     final clueController = Get.put(ClueController());
 
     return Scaffold(
@@ -26,7 +26,7 @@ class GamePage extends StatelessWidget {
             children: [
               const TopBarWidget(),
               const SizedBox(height: 32),
-              Flexible(child: MyGrid(wordModels: wordController.wordModels)),
+              const Flexible(child: MyGrid()),
               const SizedBox(height: 32),
               ClueWidget(controller: clueController),
               const SizedBox(height: 32),

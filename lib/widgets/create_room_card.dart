@@ -15,7 +15,7 @@ class CreateRoomCard extends StatelessWidget {
       children: [
         SizedBox(
           width: double.infinity,
-          height: (Get.height / 2) + 50,
+          height: (Get.height / 2) + 55,
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -41,7 +41,6 @@ class CreateRoomCard extends StatelessWidget {
                     "Username",
                     style: FontStyles.bodyOrange,
                   ),
-                  const SizedBox(height: 16),
                   const MyTextField(
                     isFilled: true,
                     fillColor: white,
@@ -132,15 +131,9 @@ class CreateRoomCard extends StatelessWidget {
           child: Container(
             width: 110,
             height: 110,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 1,
-                  offset: Offset(2, 2),
-                  color: white,
-                ),
-              ],
+              border: Border.all(color: white, width: 5),
             ),
             child: Image.asset("assets/images/english.png"),
           ),

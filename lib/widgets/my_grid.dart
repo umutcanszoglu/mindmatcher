@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mindmatcher/models/word_model.dart';
+import 'package:mindmatcher/controllers/word_controller.dart';
 import 'package:mindmatcher/widgets/game_card.dart';
 
-class MyGrid extends StatelessWidget {
-  const MyGrid({super.key, required this.wordModels});
-  final List<WordModel> wordModels;
+class MyGrid extends GetView<WordController> {
+  const MyGrid({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -18,7 +18,18 @@ class MyGrid extends StatelessWidget {
           mainAxisSpacing: 4.0,
           maxCrossAxisExtent: Get.width * 0.2,
         ),
-        children: wordModels.map((e) => GameCard(text: e.word, color: e.color)).toList(),
+        children: controller.wordModels
+            .map(
+              (e) => GameCard(
+                text: e.word,
+                color: e.color,
+                onTap: () {
+                  e.isSelected = true;
+                  controller.wordModels.refresh();
+                },
+              ),
+            )
+            .toList(),
       ),
     );
   }
