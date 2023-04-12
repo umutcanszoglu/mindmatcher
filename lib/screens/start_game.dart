@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mindmatcher/consts/languages.dart';
 import 'package:mindmatcher/consts/theme.dart';
 import 'package:mindmatcher/screens/create_room.dart';
-import 'package:mindmatcher/widgets/language_card.dart';
+import 'package:mindmatcher/widgets/flag_card.dart';
 import 'package:mindmatcher/widgets/my_button.dart';
 
 class StartGamePage extends StatelessWidget {
@@ -34,18 +35,53 @@ class StartGamePage extends StatelessWidget {
                 height: 0,
                 thickness: 5,
                 color: orange,
-                indent: 56,
+                indent: 48,
                 endIndent: 24,
               ),
               const Spacer(),
               Row(
                 children: [
-                  const Expanded(child: LanguageCard()),
+                  Expanded(
+                    child: MyButton(
+                      text: "Language",
+                      width: double.infinity,
+                      height: 60,
+                      textStyle: FontStyles.buttonsPurple,
+                      borderColor: purple,
+                      onTap: () {
+                        Get.dialog(
+                          AlertDialog(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+                            actionsPadding: const EdgeInsets.only(bottom: 16, left: 24, right: 24),
+                            actionsAlignment: MainAxisAlignment.center,
+                            backgroundColor: white,
+                            title: Text(
+                              "Language",
+                              style: FontStyles.bodyBlack,
+                              textAlign: TextAlign.center,
+                            ),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    ...Languages.languages.map((e) => FlagCard(flag: e)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 16),
                   MyButton(
                     text: "Start",
-                    width: 120,
-                    height: 50,
-                    color: purple,
+                    color: orange,
+                    width: 220,
+                    height: 60,
                     textStyle: FontStyles.buttons,
                     onTap: () {
                       Get.to(const CreateRoomPage());
