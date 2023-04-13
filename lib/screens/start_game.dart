@@ -76,12 +76,12 @@ class StartGamePage extends StatelessWidget {
                       },
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 8),
                   MyButton(
                     text: "Start",
-                    color: orange,
                     width: 220,
                     height: 60,
+                    color: orange,
                     textStyle: FontStyles.buttons,
                     onTap: () {
                       Get.to(const CreateRoomPage());

@@ -31,7 +31,7 @@ class WordController extends GetxController {
         wordModels.add(entity);
       }
       if (i >= 16 && i < 24) {
-        final entity = WordModel(word: word, color: dirtyWhite);
+        final entity = WordModel(word: word, color: blue);
         wordModels.add(entity);
       }
       if (i >= 24) {

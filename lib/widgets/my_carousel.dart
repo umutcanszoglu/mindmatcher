@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:mindmatcher/consts/teams.dart';
 import 'package:mindmatcher/widgets/teams_card.dart';
 
 class MyCarousel extends StatelessWidget {
@@ -15,12 +14,12 @@ class MyCarousel extends StatelessWidget {
         enableInfiniteScroll: false,
         enlargeCenterPage: true,
       ),
-      items: Teams.teams.map((i) {
+      items: [0, 1].map((i) {
         return Builder(
           builder: (BuildContext context) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: TeamsCard(team: i),
+            return const Padding(
+              padding: EdgeInsets.only(right: 8.0),
+              child: TeamsCard(),
             );
           },
         );

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/consts/theme.dart';
 
-class ResetCard extends StatelessWidget {
-  const ResetCard({super.key, this.onTap});
+class GameLogCard extends StatelessWidget {
+  const GameLogCard({super.key, this.onTap});
   final Function()? onTap;
 
   @override
@@ -18,7 +18,7 @@ class ResetCard extends StatelessWidget {
           color: dirtyWhite,
           borderRadius: BorderRadius.circular(32),
         ),
-        child: Center(child: Text("Reset", style: FontStyles.smallButtonBlack)),
+        child: Center(child: Text("Logs", style: FontStyles.smallButtonBlack)),
       ),
     );
   }

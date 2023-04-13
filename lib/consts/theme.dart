@@ -9,6 +9,7 @@ const white = Color(0xffF5F5F5);
 const green = Color(0xff628c36);
 const red = Color(0xffCF0A0A);
 const black = Color(0xff2D2727);
+const blue = Color.fromARGB(255, 155, 203, 230);
 
 class FontStyles {
   static TextStyle headers = GoogleFonts.righteous(
