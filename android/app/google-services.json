@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "920114712869",
+    "project_id": "mind-matcher-2b0d4",
+    "storage_bucket": "mind-matcher-2b0d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920114712869:android:17b3d386cc9f9fdedb0acc",
+        "android_client_info": {
+          "package_name": "com.shellix.mindmatcher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920114712869-h32akseumjdvqjj3n4995ggiq1pv5uq0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqqHfxQ9D-EBYiQYUaKbcnmJoQDRbdMHU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920114712869-h32akseumjdvqjj3n4995ggiq1pv5uq0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
