@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:mindmatcher/consts/icons.dart';
 import 'package:mindmatcher/consts/theme.dart';
-import 'package:mindmatcher/controllers/clue_controller.dart';
 import 'package:mindmatcher/widgets/my_button.dart';
 import 'package:mindmatcher/widgets/my_textfield.dart';
 
 class ClueWidget extends StatelessWidget {
   const ClueWidget({
     super.key,
-    required this.controller,
+    //required this.controller,
   });
-  final ClueController controller;
+  //final ClueController controller;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
+        const Expanded(
           child: MyTextField(
-            controller: controller.clue,
+            //controller: controller.clue,
             prefixIcon: infoIcon,
             prefixIconColor: orange,
             borderColor: white,
@@ -26,10 +25,10 @@ class ClueWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 4),
-        SizedBox(
+        const SizedBox(
           width: 90,
           child: MyTextField(
-            controller: controller.clueCount,
+            //controller: controller.clueCount,
             hintText: "0",
             prefixIcon: numberIcon,
             borderColor: white,
@@ -38,7 +37,7 @@ class ClueWidget extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         MyButton(
-          onTap: () => controller.getClues(),
+          //onTap: () => controller.getClues(),
           width: 60,
           height: 60,
           color: orange,

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mindmatcher/consts/icons.dart';
 import 'package:mindmatcher/consts/theme.dart';
+import 'package:mindmatcher/controllers/player_controller.dart';
+import 'package:mindmatcher/controllers/room_controller.dart';
 import 'package:mindmatcher/screens/game_page.dart';
 import 'package:mindmatcher/widgets/my_button.dart';
 import 'package:mindmatcher/widgets/my_textfield.dart';
@@ -12,6 +14,9 @@ class CreateRoomPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final playerController = Get.put(PlayerController());
+    final roomController = Get.put(RoomController());
+
     return Scaffold(
       backgroundColor: white,
       body: SafeArea(
@@ -27,7 +32,8 @@ class CreateRoomPage extends StatelessWidget {
               ),
               const SizedBox(height: 48),
               Lottie.asset("assets/lotties/create.json"),
-              const MyTextField(
+              MyTextField(
+                controller: playerController.username,
                 prefixIcon: nicknameIcon,
                 prefixIconColor: orange,
                 hintText: "username",
@@ -43,7 +49,11 @@ class CreateRoomPage extends StatelessWidget {
                       text: "Create",
                       height: 60,
                       textStyle: FontStyles.buttonsPurple,
-                      onTap: () => Get.to(const GamePage()),
+                      onTap: () {
+                        playerController.createPlayer();
+                        //roomController.createRoom();
+                        Get.to(const GamePage());
+                      },
                     ),
                   ),
                   const SizedBox(width: 16),

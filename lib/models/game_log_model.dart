@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class GameLogModel {
   bool team;
@@ -10,4 +12,27 @@ class GameLogModel {
     required this.name,
     required this.answers,
   });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'team': team,
+      'role': role,
+      'name': name,
+      'answers': answers,
+    };
+  }
+
+  factory GameLogModel.fromMap(Map<String, dynamic> map) {
+    return GameLogModel(
+      team: map['team'] as bool,
+      role: map['role'] as bool,
+      name: map['name'] as String,
+      answers: map['answers'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory GameLogModel.fromJson(String source) =>
+      GameLogModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
