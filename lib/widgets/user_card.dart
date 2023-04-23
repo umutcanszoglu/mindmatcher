@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/consts/icons.dart';
 import 'package:mindmatcher/consts/theme.dart';
+import 'package:mindmatcher/controllers/room_controller.dart';
 
-class UserCard extends StatelessWidget {
+class UserCard extends GetView<RoomController> {
   const UserCard({super.key, this.onTap});
   final Function()? onTap;
 

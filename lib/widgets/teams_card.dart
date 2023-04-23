@@ -19,7 +19,7 @@ class TeamsCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text("asd", style: FontStyles.bodyWhite),
+          Text("Team Name", style: FontStyles.bodyWhite),
           Text("8", style: FontStyles.bodyWhite),
           Text("Operative", style: FontStyles.smallButtonwhite),
           Row(

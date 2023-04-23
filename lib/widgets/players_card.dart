@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/consts/icons.dart';
 import 'package:mindmatcher/consts/theme.dart';
+import 'package:mindmatcher/controllers/room_controller.dart';
 
-class PlayersCard extends StatelessWidget {
+class PlayersCard extends GetView<RoomController> {
   const PlayersCard({super.key, this.onTap});
   final Function()? onTap;
   @override
@@ -22,7 +23,8 @@ class PlayersCard extends StatelessWidget {
           children: [
             playersIcon,
             const SizedBox(width: 5),
-            Text("15", style: FontStyles.smallButtonBlack),
+            Obx(() => Text(controller.room.value?.players.length.toString() ?? "0",
+                style: FontStyles.smallButtonBlack)),
           ],
         ),
       ),

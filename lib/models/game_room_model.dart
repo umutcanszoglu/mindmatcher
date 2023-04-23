@@ -10,7 +10,7 @@ class GameRoomModel {
   String creator;
   bool teamTurn;
   bool roleTurn;
-  List<Player> players;
+  Map<String, Player> players;
   List<GameLogModel> gameLogs;
   List<WordModel> words;
   GameRoomModel({
@@ -23,44 +23,34 @@ class GameRoomModel {
     required this.words,
   });
 
+  String toJson() => json.encode(toMap());
+
+  factory GameRoomModel.fromJson(String source) => GameRoomModel.fromMap(json.decode(source));
+
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'uid': uid,
-      'creator': creator,
-      'players': players.map((x) => x.toMap()).toList(),
-      'teamTurn': teamTurn,
-      'roleTurn': roleTurn,
-      'gameLogs': gameLogs.map((x) => x.toMap()).toList(),
-      'words': words.map((x) => x.toMap()).toList(),
-    };
+    final result = <String, dynamic>{};
+
+    result.addAll({'uid': uid});
+    result.addAll({'creator': creator});
+    result.addAll({'teamTurn': teamTurn});
+    result.addAll({'roleTurn': roleTurn});
+    result.addAll({'players': players.map((key, value) => MapEntry(key, value.toMap()))});
+    result.addAll({'gameLogs': gameLogs.map((x) => x.toMap()).toList()});
+    result.addAll({'words': words.map((x) => x.toMap()).toList()});
+
+    return result;
   }
 
   factory GameRoomModel.fromMap(Map<String, dynamic> map) {
     return GameRoomModel(
-      creator: map['creator'] as String,
-      uid: map['uid'] as String,
-      players: List<Player>.from(
-        (map['players'] as List<dynamic>).map<Player>(
-          (x) => Player.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      teamTurn: map['teamTurn'] as bool,
-      roleTurn: map['roleTurn'] as bool,
-      gameLogs: List<GameLogModel>.from(
-        (map['gameLogs'] as List<dynamic>).map<GameLogModel>(
-          (x) => GameLogModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      words: List<WordModel>.from(
-        (map['words'] as List<dynamic>).map<WordModel>(
-          (x) => WordModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      uid: map['uid'] ?? '',
+      creator: map['creator'] ?? '',
+      teamTurn: map['teamTurn'] ?? false,
+      roleTurn: map['roleTurn'] ?? false,
+      players:
+          Map<String, Player>.from(map['players'].map((k, v) => MapEntry(k, Player.fromMap(v)))),
+      gameLogs: List<GameLogModel>.from(map['gameLogs']?.map((x) => GameLogModel.fromMap(x))),
+      words: List<WordModel>.from(map['words']?.map((x) => WordModel.fromMap(x))),
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory GameRoomModel.fromJson(String source) =>
-      GameRoomModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

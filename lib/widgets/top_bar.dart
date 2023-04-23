@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/consts/theme.dart';
+import 'package:mindmatcher/controllers/room_controller.dart';
 import 'package:mindmatcher/widgets/game_log.dart';
 import 'package:mindmatcher/widgets/players_card.dart';
 import 'package:mindmatcher/widgets/rules_card.dart';
 import 'package:mindmatcher/widgets/user_card.dart';
 
-class TopBarWidget extends StatelessWidget {
+class TopBarWidget extends GetView<RoomController> {
   const TopBarWidget({super.key});
 
   @override

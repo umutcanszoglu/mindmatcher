@@ -3,9 +3,8 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mindmatcher/consts/icons.dart';
 import 'package:mindmatcher/consts/theme.dart';
-import 'package:mindmatcher/controllers/player_controller.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
-import 'package:mindmatcher/screens/game_page.dart';
+import 'package:mindmatcher/screens/category_page.dart';
 import 'package:mindmatcher/widgets/my_button.dart';
 import 'package:mindmatcher/widgets/my_textfield.dart';
 
@@ -14,8 +13,7 @@ class CreateRoomPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final playerController = Get.put(PlayerController());
-    final roomController = Get.put(RoomController());
+    final controller = Get.put(RoomController());
 
     return Scaffold(
       backgroundColor: white,
@@ -33,7 +31,7 @@ class CreateRoomPage extends StatelessWidget {
               const SizedBox(height: 48),
               Lottie.asset("assets/lotties/create.json"),
               MyTextField(
-                controller: playerController.username,
+                controller: controller.username,
                 prefixIcon: nicknameIcon,
                 prefixIconColor: orange,
                 hintText: "username",
@@ -50,9 +48,7 @@ class CreateRoomPage extends StatelessWidget {
                       height: 60,
                       textStyle: FontStyles.buttonsPurple,
                       onTap: () {
-                        playerController.createPlayer();
-                        //roomController.createRoom();
-                        Get.to(const GamePage());
+                        Get.to(const CategoryPage());
                       },
                     ),
                   ),
@@ -75,7 +71,8 @@ class CreateRoomPage extends StatelessWidget {
                               style: FontStyles.bodyBlack,
                               textAlign: TextAlign.center,
                             ),
-                            content: const MyTextField(
+                            content: MyTextField(
+                              controller: controller.joinKey,
                               isFilled: true,
                               fillColor: white,
                               prefixIcon: keyIcon,
@@ -102,6 +99,10 @@ class CreateRoomPage extends StatelessWidget {
                                       borderColor: purple,
                                       width: double.infinity,
                                       height: 40,
+                                      onTap: () {
+                                        Get.snackbar("title", "message");
+                                        controller.joinRoom();
+                                      },
                                     ),
                                   ),
                                 ],
