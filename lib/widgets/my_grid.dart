@@ -4,9 +4,9 @@ import 'package:mindmatcher/models/word_model.dart';
 import 'package:mindmatcher/widgets/game_card.dart';
 
 class MyGrid extends StatelessWidget {
-  const MyGrid({super.key, required this.gameWords});
+  const MyGrid({super.key, required this.show, required this.gameWords});
   final List<WordModel> gameWords;
-
+  final bool show;
   @override
   Widget build(BuildContext context) {
     return GridView(
@@ -17,7 +17,12 @@ class MyGrid extends StatelessWidget {
         mainAxisSpacing: 4.0,
         maxCrossAxisExtent: Get.width * 0.2,
       ),
-      children: gameWords.map((e) => GameCard(model: e)).toList(),
+      children: gameWords
+          .map((e) => GameCard(
+                model: e,
+                show: e.isOpen || show,
+              ))
+          .toList(),
     );
   }
 }

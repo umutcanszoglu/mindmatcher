@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:mindmatcher/consts/theme.dart';
 import 'package:mindmatcher/controllers/category_controller.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
-import 'package:mindmatcher/screens/game_page.dart';
 import 'package:mindmatcher/widgets/category_card.dart';
 import 'package:mindmatcher/widgets/my_button.dart';
 
@@ -67,13 +66,11 @@ class CategoryPage extends StatelessWidget {
                         onTap: () async {
                           EasyLoading.show(maskType: EasyLoadingMaskType.clear);
                           final words = await controller.getGameWords();
-                          EasyLoading.dismiss();
                           //print(words);
                           final models = roomController.fillWordModels(words);
                           //print(models[0].word);
                           roomController.createRoom();
                           //print(roomController.room.value?.words[0].word);
-                          Get.to(GamePage(roomController.room.value!.words));
                         },
                       ),
                     ],

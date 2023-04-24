@@ -23,7 +23,7 @@ class UserCard extends GetView<RoomController> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(controller.room.value!.creator, style: FontStyles.smallButtonBlack),
+            Text(controller.myName, style: FontStyles.smallButtonBlack),
             avatarIcon,
           ],
         ),

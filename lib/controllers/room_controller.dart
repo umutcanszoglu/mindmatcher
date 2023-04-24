@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:mindmatcher/models/game_room_model.dart';
 import 'package:mindmatcher/models/player_model.dart';
 import 'package:mindmatcher/models/word_model.dart';
+import 'package:mindmatcher/screens/game_page.dart';
 import 'package:mindmatcher/services/api.dart';
 
 class RoomController extends GetxController {
@@ -16,7 +17,13 @@ class RoomController extends GetxController {
   final username = TextEditingController();
   final joinKey = TextEditingController();
 
-  final wordModels = <WordModel>[].obs;
+  final wordModels = <WordModel>[];
+
+  //List<WordModel> get words => room.value!.words;
+
+  Player get me => room.value!.players[myName]!;
+
+  late final String myName;
 
   void createRoom() async {
     final tempRoom = GameRoomModel(
@@ -29,8 +36,10 @@ class RoomController extends GetxController {
       words: [],
     );
 
+    myName = username.text.trim();
+
     final player = Player(
-      name: username.text.trim(),
+      name: myName,
       role: false,
       team: false,
     );
@@ -62,9 +71,16 @@ class RoomController extends GetxController {
 
   void listenRoom(String uid) {
     getRoomHandle?.cancel();
-    getRoomHandle = Api.roomStream(uid).listen((gameRoomModel) {
-      room.value = gameRoomModel;
-    });
+    getRoomHandle = Api.roomStream(uid).listen(roomUpdate);
+  }
+
+  void roomUpdate(GameRoomModel gameRoomModel) {
+    final wasNull = room.value == null;
+    room.value = gameRoomModel;
+    if (wasNull) {
+      EasyLoading.dismiss();
+      Get.to(const GamePage());
+    }
   }
 
   List<WordModel> fillWordModels(List<String> words) {
