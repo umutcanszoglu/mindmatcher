@@ -26,7 +26,7 @@ class GamePage extends GetView<RoomController> {
                     Flexible(
                         child: MyGrid(
                       gameWords: controller.room.value!.words,
-                      show: controller.me.role,
+                      show: controller.user.role,
                     )),
                     const SizedBox(height: 32),
                     const ClueWidget(),

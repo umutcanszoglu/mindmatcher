@@ -21,7 +21,7 @@ class RoomController extends GetxController {
 
   //List<WordModel> get words => room.value!.words;
 
-  Player get me => room.value!.players[myName]!;
+  Player get user => room.value!.players[myName]!;
 
   late final String myName;
 
@@ -58,11 +58,13 @@ class RoomController extends GetxController {
   }
 
   void joinRoom() async {
+    myName = username.text.trim();
     final player = Player(
-      name: username.text.trim(),
+      name: myName,
       role: false,
       team: false,
     );
+
     final roomUID = joinKey.text.trim();
     await Api.addPlayerToRoom(roomUID, player);
 
@@ -83,7 +85,7 @@ class RoomController extends GetxController {
     }
   }
 
-  List<WordModel> fillWordModels(List<String> words) {
+  void fillWordModels(List<String> words) {
     for (int i = 0; i < words.length; i++) {
       if (i >= 24) {
         final model = WordModel(word: words[i], type: "b", isOpen: false);
@@ -103,7 +105,6 @@ class RoomController extends GetxController {
       }
     }
     wordModels.shuffle();
-    return wordModels;
   }
 
   @override
