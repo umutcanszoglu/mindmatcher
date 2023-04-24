@@ -26,7 +26,7 @@ class RoomController extends GetxController {
       roleTurn: false,
       players: {},
       gameLogs: [],
-      words: wordModels,
+      words: [],
     );
 
     final player = Player(
@@ -37,6 +37,7 @@ class RoomController extends GetxController {
 
     tempRoom.creator = player.name;
     tempRoom.players[player.name] = player;
+    tempRoom.words = wordModels;
 
     final uid = await Api.createRoom(tempRoom);
 
@@ -66,7 +67,7 @@ class RoomController extends GetxController {
     });
   }
 
-  void fillWordModels(List<String> words) {
+  List<WordModel> fillWordModels(List<String> words) {
     for (int i = 0; i < words.length; i++) {
       if (i >= 24) {
         final model = WordModel(word: words[i], type: "b", isOpen: false);
@@ -86,6 +87,7 @@ class RoomController extends GetxController {
       }
     }
     wordModels.shuffle();
+    return wordModels;
   }
 
   @override

@@ -68,8 +68,11 @@ class CategoryPage extends StatelessWidget {
                           EasyLoading.show(maskType: EasyLoadingMaskType.clear);
                           final words = await controller.getGameWords();
                           EasyLoading.dismiss();
-                          roomController.fillWordModels(words);
+                          //print(words);
+                          final models = roomController.fillWordModels(words);
+                          //print(models[0].word);
                           roomController.createRoom();
+                          //print(roomController.room.value?.words[0].word);
                           Get.to(GamePage(roomController.room.value!.words));
                         },
                       ),
