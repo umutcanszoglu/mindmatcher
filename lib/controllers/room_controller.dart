@@ -79,6 +79,7 @@ class RoomController extends GetxController {
   void roomUpdate(GameRoomModel gameRoomModel) {
     final wasNull = room.value == null;
     room.value = gameRoomModel;
+
     if (wasNull) {
       EasyLoading.dismiss();
       Get.to(const GamePage());
@@ -105,6 +106,15 @@ class RoomController extends GetxController {
       }
     }
     wordModels.shuffle();
+  }
+
+  void switchTeam() {
+    Api.switchTeam(room.value?.uid ?? "", user);
+  }
+
+  void selectRole(bool role) {
+    Api.selectRole(room.value?.uid ?? "", user, role);
+    Get.back();
   }
 
   @override

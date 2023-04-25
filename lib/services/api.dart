@@ -72,4 +72,28 @@ class Api {
       return false;
     }
   }
+
+  static Future<bool> switchTeam(String roomUid, Player player) async {
+    try {
+      await _firestore
+          .collection("rooms")
+          .doc(roomUid)
+          .update({"players.${player.name}": player.copyWith(team: !player.team).toMap()});
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static Future<bool> selectRole(String roomUid, Player player, bool role) async {
+    try {
+      await _firestore
+          .collection("rooms")
+          .doc(roomUid)
+          .update({"players.${player.name}": player.copyWith(role: role).toMap()});
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
 }

@@ -31,4 +31,19 @@ class Player {
 
   factory Player.fromJson(String source) =>
       Player.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() => 'Player(name: $name, role: $role, team: $team)';
+
+  Player copyWith({
+    String? name,
+    bool? role,
+    bool? team,
+  }) {
+    return Player(
+      name: name ?? this.name,
+      role: role ?? this.role,
+      team: team ?? this.team,
+    );
+  }
 }
