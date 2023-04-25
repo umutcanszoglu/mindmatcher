@@ -30,7 +30,7 @@ class GameCard extends StatelessWidget {
                       : model.type == "p"
                           ? purple
                           : black
-              : Colors.amber,
+              : blue,
           borderRadius: BorderRadius.circular(32),
         ),
         child: Text(

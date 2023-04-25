@@ -75,7 +75,7 @@ class TopBarWidget extends GetView<RoomController> {
             Get.dialog(
               AlertDialog(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-                actionsPadding: const EdgeInsets.only(bottom: 16, left: 32, right: 32),
+                actionsPadding: const EdgeInsets.only(bottom: 16),
                 actionsAlignment: MainAxisAlignment.center,
                 backgroundColor: white,
                 title: Text(
@@ -92,10 +92,12 @@ class TopBarWidget extends GetView<RoomController> {
                         style: FontStyles.bodyBlack
                             .copyWith(color: controller.user.team ? purple : orange),
                       ),
+                      const SizedBox(height: 8),
                       Text(
                         controller.user.role ? "Role: Narrator" : "Role: Predictor",
                         style: FontStyles.bodyBlack.copyWith(),
                       ),
+                      const SizedBox(height: 16),
                       MyButton(
                         color: controller.user.team ? purple : orange,
                         text: "Switch Team",
@@ -106,6 +108,9 @@ class TopBarWidget extends GetView<RoomController> {
                           controller.switchTeam();
                         },
                       ),
+                      const SizedBox(height: 16),
+                      Text("Select Role", style: FontStyles.bodyBlack),
+                      const SizedBox(height: 8),
                       Row(
                         children: [
                           Expanded(
@@ -120,6 +125,7 @@ class TopBarWidget extends GetView<RoomController> {
                               },
                             ),
                           ),
+                          const SizedBox(width: 8),
                           Expanded(
                             child: MyButton(
                               color: green,
