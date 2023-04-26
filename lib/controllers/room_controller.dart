@@ -23,6 +23,26 @@ class RoomController extends GetxController {
 
   Player get user => room.value!.players[myName]!;
 
+  Player? get purpleNarrator {
+    try {
+      return room.value!.players.entries
+          .firstWhere((t) => t.value.role == true && t.value.team == true)
+          .value;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Player? get orangeNarrator {
+    try {
+      return room.value!.players.entries
+          .firstWhere((t) => t.value.role == true && t.value.team == false)
+          .value;
+    } catch (_) {
+      return null;
+    }
+  }
+
   late final String myName;
 
   void createRoom() async {
