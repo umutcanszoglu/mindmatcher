@@ -25,23 +25,20 @@ class GamePage extends GetView<RoomController> {
                     const TopBarWidget()
                         .animate()
                         .shimmer(delay: 300.ms, duration: 1800.ms)
-                        .slide(begin: const Offset(0, -0.5))
+                        .slide(begin: const Offset(0, -3))
                         .shake(hz: 4, curve: Curves.easeInOutCubic)
                         .scaleXY(end: 1.1, duration: 600.ms)
                         .then(delay: 600.ms)
                         .scaleXY(end: 1 / 1.1),
                     const SizedBox(height: 24),
-                    Flexible(
-                      child: MyGrid(
-                        gameWords: controller.room.value!.words,
-                        role: controller.user.role,
-                      ),
+                    const Flexible(
+                      child: MyGrid(),
                     ),
                     const SizedBox(height: 16),
                     ClueWidget(controller: controller)
                         .animate()
                         .shimmer(delay: 300.ms, duration: 1800.ms)
-                        .slide(begin: const Offset(0, -0.5))
+                        .slide(begin: const Offset(-1, 0))
                         .shake(hz: 4, curve: Curves.easeInOutCubic)
                         .scaleXY(end: 1.1, duration: 600.ms)
                         .then(delay: 600.ms)
@@ -50,7 +47,7 @@ class GamePage extends GetView<RoomController> {
                     const TeamInfoCard()
                         .animate()
                         .shimmer(delay: 300.ms, duration: 1800.ms)
-                        .slide(begin: const Offset(0, -0.07))
+                        .slide(begin: const Offset(1, 0))
                         .shake(hz: 4, curve: Curves.easeInOutCubic)
                         .scaleXY(end: 1.1, duration: 600.ms)
                         .then(delay: 600.ms)

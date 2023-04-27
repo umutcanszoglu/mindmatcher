@@ -16,7 +16,7 @@ class PlayersCard extends GetView<RoomController> {
         height: 40,
         decoration: BoxDecoration(
           color: dirtyWhite,
-          borderRadius: BorderRadius.circular(32),
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

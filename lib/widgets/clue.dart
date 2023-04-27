@@ -25,7 +25,7 @@ class ClueWidget extends StatelessWidget {
           height: 60,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(32),
+            borderRadius: BorderRadius.circular(24),
           ),
           child: Center(
             child: Text(

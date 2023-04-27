@@ -16,7 +16,7 @@ class RulesCard extends StatelessWidget {
         height: 40,
         decoration: BoxDecoration(
           color: dirtyWhite,
-          borderRadius: BorderRadius.circular(32),
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Center(child: Text("Rules", style: FontStyles.smallButtonBlack)),
       ),

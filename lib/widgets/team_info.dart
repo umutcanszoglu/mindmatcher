@@ -18,7 +18,7 @@ class TeamInfoCard extends GetView<RoomController> {
         height: 270,
         decoration: BoxDecoration(
           color: controller.room.value?.teamTurn ?? false ? purple : orange,
-          borderRadius: BorderRadius.circular(32),
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
