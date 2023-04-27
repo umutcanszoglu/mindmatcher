@@ -31,7 +31,7 @@ class GameCard extends StatelessWidget {
                           ? purple
                           : black
               : blue,
-          borderRadius: BorderRadius.circular(32),
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Text(
           model.word,

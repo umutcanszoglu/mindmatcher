@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/firebase_options.dart';
@@ -13,6 +14,7 @@ void main() async {
   );
 
   EasyLoading.instance.indicatorType = EasyLoadingIndicatorType.fadingCircle;
+  Animate.restartOnHotReload = true;
   runApp(const MyApp());
 }
 
@@ -22,12 +24,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        builder: EasyLoading.init(),
-        home: const StartGamePage());
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      builder: EasyLoading.init(),
+      home: const StartGamePage(),
+    );
   }
 }

@@ -129,7 +129,11 @@ class RoomController extends GetxController {
   }
 
   void switchTeam() {
-    Api.switchTeam(room.value?.uid ?? "", user);
+    if (user.role == true) {
+      Api.switchProblem(room.value?.uid ?? "", user);
+    } else {
+      Api.switchTeam(room.value?.uid ?? "", user);
+    }
   }
 
   void selectRole(bool role) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/consts/theme.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
@@ -21,17 +22,39 @@ class GamePage extends GetView<RoomController> {
               ? const Center(child: CircularProgressIndicator())
               : Column(
                   children: [
-                    const TopBarWidget(),
+                    const TopBarWidget()
+                        .animate()
+                        .shimmer(delay: 300.ms, duration: 1800.ms)
+                        .slide(begin: const Offset(0, -0.5))
+                        .shake(hz: 4, curve: Curves.easeInOutCubic)
+                        .scaleXY(end: 1.1, duration: 600.ms)
+                        .then(delay: 600.ms)
+                        .scaleXY(end: 1 / 1.1),
                     const SizedBox(height: 24),
                     Flexible(
-                        child: MyGrid(
-                      gameWords: controller.room.value!.words,
-                      role: controller.user.role,
-                    )),
+                      child: MyGrid(
+                        gameWords: controller.room.value!.words,
+                        role: controller.user.role,
+                      ),
+                    ),
                     const SizedBox(height: 16),
-                    const ClueWidget(),
+                    ClueWidget(controller: controller)
+                        .animate()
+                        .shimmer(delay: 300.ms, duration: 1800.ms)
+                        .slide(begin: const Offset(0, -0.5))
+                        .shake(hz: 4, curve: Curves.easeInOutCubic)
+                        .scaleXY(end: 1.1, duration: 600.ms)
+                        .then(delay: 600.ms)
+                        .scaleXY(end: 1 / 1.1),
                     const SizedBox(height: 16),
-                    const TeamInfoCard(),
+                    const TeamInfoCard()
+                        .animate()
+                        .shimmer(delay: 300.ms, duration: 1800.ms)
+                        .slide(begin: const Offset(0, -0.07))
+                        .shake(hz: 4, curve: Curves.easeInOutCubic)
+                        .scaleXY(end: 1.1, duration: 600.ms)
+                        .then(delay: 600.ms)
+                        .scaleXY(end: 1 / 1.1),
                   ],
                 )),
         ),

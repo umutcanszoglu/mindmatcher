@@ -16,7 +16,41 @@ class TopBarWidget extends GetView<RoomController> {
     return Row(
       children: [
         //Players
-        const PlayersCard(),
+        PlayersCard(
+          onTap: () {
+            Get.dialog(
+              AlertDialog(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+                actionsPadding: const EdgeInsets.only(bottom: 16, left: 24, right: 24),
+                actionsAlignment: MainAxisAlignment.center,
+                backgroundColor: white,
+                title: Text(
+                  "Players",
+                  style: FontStyles.bodyBlack,
+                  textAlign: TextAlign.center,
+                ),
+                content: Obx(
+                  () => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ...controller.room.value!.players.entries.map(
+                        (e) => Chip(
+                          elevation: 5.0,
+                          avatar:
+                              Icon(Icons.circle, size: 20, color: e.value.team ? purple : orange),
+                          label: Text(
+                            e.value.name,
+                            style: FontStyles.smallButtonBlack,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
         const SizedBox(width: 4),
         //GameLog
         GameLogCard(
@@ -68,7 +102,7 @@ class TopBarWidget extends GetView<RoomController> {
             );
           },
         ),
-        const SizedBox(width: 46),
+        const SizedBox(width: 45),
         //User
         UserCard(
           onTap: () {

@@ -11,22 +11,20 @@ class UserCard extends GetView<RoomController> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Obx(
-        () => AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          width: Get.width / 4,
-          height: 40,
-          decoration: BoxDecoration(
-            color: controller.user.team ? purple : orange,
-            borderRadius: BorderRadius.circular(32),
-          ),
-          child: Center(
-            child: Text(
-              controller.myName,
-              style: FontStyles.smallButtonBlack.copyWith(
-                color: controller.user.team ? white : black,
-              ),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        width: Get.width / 4,
+        height: 40,
+        decoration: BoxDecoration(
+          color: dirtyWhite,
+          borderRadius: BorderRadius.circular(32),
+        ),
+        child: Center(
+          child: Text(
+            controller.myName,
+            style: FontStyles.smallButtonBlack.copyWith(
+              color: black,
             ),
           ),
         ),

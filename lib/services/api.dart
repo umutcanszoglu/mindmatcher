@@ -85,6 +85,16 @@ class Api {
     }
   }
 
+  static Future<bool> switchProblem(String roomUid, Player player) async {
+    try {
+      await _firestore.collection("rooms").doc(roomUid).update(
+          {"players.${player.name}": player.copyWith(team: !player.team, role: false).toMap()});
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   static Future<bool> selectRole(String roomUid, Player player, bool role) async {
     try {
       await _firestore
