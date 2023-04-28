@@ -8,9 +8,10 @@ class OrangeInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final orangeCount = controller.room.value!.words.where((e) => e.type == "o").length;
-    final orangeIsOpen =
-        controller.room.value!.words.where((e) => e.type == "o" && e.isOpen).length;
+    final orangeIsClosed = controller.room.value!.words.entries
+        .where((e) => e.value.type == "o" && !e.value.isOpen)
+        .length;
+
     final color = controller.room.value?.teamTurn ?? false ? white : black;
     return Column(
       children: [
@@ -20,7 +21,7 @@ class OrangeInfo extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          (orangeCount - orangeIsOpen).toString(),
+          orangeIsClosed.toString(),
           style: FontStyles.bodyWhite.copyWith(color: color),
         ),
         const SizedBox(height: 4),

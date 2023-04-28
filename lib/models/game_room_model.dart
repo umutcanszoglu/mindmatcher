@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:mindmatcher/models/game_log_model.dart';
@@ -12,7 +13,7 @@ class GameRoomModel {
   bool roleTurn;
   Map<String, Player> players;
   List<GameLogModel> gameLogs;
-  List<WordModel> words;
+  SplayTreeMap<String, WordModel> words;
   GameRoomModel({
     required this.uid,
     required this.creator,
@@ -36,7 +37,7 @@ class GameRoomModel {
     result.addAll({'roleTurn': roleTurn});
     result.addAll({'players': players.map((key, value) => MapEntry(key, value.toMap()))});
     result.addAll({'gameLogs': gameLogs.map((x) => x.toMap()).toList()});
-    result.addAll({'words': words.map((x) => x.toMap()).toList()});
+    result.addAll({'words': words.map((key, value) => MapEntry(key, value.toMap()))});
 
     return result;
   }
@@ -50,7 +51,8 @@ class GameRoomModel {
       players:
           Map<String, Player>.from(map['players'].map((k, v) => MapEntry(k, Player.fromMap(v)))),
       gameLogs: List<GameLogModel>.from(map['gameLogs']?.map((x) => GameLogModel.fromMap(x))),
-      words: List<WordModel>.from(map['words']?.map((x) => WordModel.fromMap(x))),
+      words: SplayTreeMap<String, WordModel>.from(
+          map['words'].map((k, v) => MapEntry(k, WordModel.fromMap(v)))),
     );
   }
 }

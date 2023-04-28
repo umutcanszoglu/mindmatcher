@@ -8,10 +8,9 @@ class PurpleInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final purpleCount = controller.room.value!.words.where((e) => e.type == "w").length;
-    final purpleIsOpen =
-        controller.room.value!.words.where((e) => e.type == "w" && e.isOpen).length;
-
+    final purpleIsClosed = controller.room.value!.words.entries
+        .where((e) => e.value.type == "p" && !e.value.isOpen)
+        .length;
     return Column(
       children: [
         Text(
@@ -22,7 +21,7 @@ class PurpleInfo extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          (purpleCount - purpleIsOpen).toString(),
+          purpleIsClosed.toString(),
           style: FontStyles.bodyWhite.copyWith(
             color: controller.room.value?.teamTurn ?? false ? white : black,
           ),

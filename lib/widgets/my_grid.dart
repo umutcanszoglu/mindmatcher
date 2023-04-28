@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
+import 'package:mindmatcher/services/api.dart';
 import 'package:mindmatcher/widgets/game_card.dart';
 
 class MyGrid extends GetView<RoomController> {
@@ -9,7 +10,8 @@ class MyGrid extends GetView<RoomController> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView(
+    return Obx(
+      () => GridView(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -17,23 +19,26 @@ class MyGrid extends GetView<RoomController> {
           mainAxisSpacing: 4.0,
           maxCrossAxisExtent: Get.width * 0.2,
         ),
-        children: controller.room.value!.words
+        children: controller.room.value!.words.entries
             .map(
-              (e) => GameCard(
-                model: e,
-                show: e.isOpen || controller.user.role,
-                onTap: () {
-                  //e.isOpen = true;
-                },
+              (kv) => Obx(
+                () => GameCard(
+                  model: kv.value,
+                  show: controller.user.role || kv.value.isOpen,
+                  onTap: () {
+                    Api.openWord(controller.room.value?.uid ?? "", kv.value.word);
+                  },
+                )
+                    .animate(key: ValueKey(kv.key + kv.value.isOpen.toString()))
+                    .shimmer(delay: 300.ms, duration: 1800.ms)
+                    .shake(hz: 4, curve: Curves.easeInOutCubic)
+                    .scaleXY(end: 1.1, duration: 600.ms)
+                    .then(delay: 600.ms)
+                    .scaleXY(end: 1 / 1.1),
               ),
             )
-            .toList()
-            .animate()
-            .shimmer(delay: 300.ms, duration: 1800.ms)
-            .slide(begin: const Offset(0, -3))
-            .shake(hz: 4, curve: Curves.easeInOutCubic)
-            .scaleXY(end: 1.1, duration: 600.ms)
-            .then(delay: 600.ms)
-            .scaleXY(end: 1 / 1.1));
+            .toList(),
+      ),
+    );
   }
 }

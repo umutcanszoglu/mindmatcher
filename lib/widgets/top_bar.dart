@@ -129,13 +129,14 @@ class TopBarWidget extends GetView<RoomController> {
                       const SizedBox(height: 8),
                       Text(
                         controller.user.role ? "Role: Narrator" : "Role: Predictor",
-                        style: FontStyles.bodyBlack.copyWith(),
+                        style: FontStyles.bodyBlack
+                            .copyWith(color: controller.user.role ? red : green),
                       ),
                       const SizedBox(height: 16),
                       MyButton(
                         color: controller.user.team ? purple : orange,
                         text: "Switch Team",
-                        width: 180,
+                        width: 150,
                         height: 40,
                         textStyle: FontStyles.buttons,
                         onTap: () {
@@ -151,7 +152,7 @@ class TopBarWidget extends GetView<RoomController> {
                             child: MyButton(
                               color: red,
                               text: "Narrator",
-                              width: 180,
+                              width: 120,
                               height: 40,
                               textStyle: FontStyles.buttons,
                               onTap: () {
@@ -160,17 +161,15 @@ class TopBarWidget extends GetView<RoomController> {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          Expanded(
-                            child: MyButton(
-                              color: green,
-                              text: "Predictor",
-                              width: 180,
-                              height: 40,
-                              textStyle: FontStyles.buttons,
-                              onTap: () {
-                                controller.selectRole(false);
-                              },
-                            ),
+                          MyButton(
+                            color: green,
+                            text: "Predictor",
+                            width: 120,
+                            height: 40,
+                            textStyle: FontStyles.buttons,
+                            onTap: () {
+                              controller.selectRole(false);
+                            },
                           ),
                         ],
                       ),

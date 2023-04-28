@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -17,7 +18,7 @@ class RoomController extends GetxController {
   final username = TextEditingController();
   final joinKey = TextEditingController();
 
-  final wordModels = <WordModel>[];
+  final wordModels = SplayTreeMap<String, WordModel>();
 
   //List<WordModel> get words => room.value!.words;
 
@@ -53,7 +54,7 @@ class RoomController extends GetxController {
       roleTurn: false,
       players: {},
       gameLogs: [],
-      words: [],
+      words: SplayTreeMap<String, WordModel>(),
     );
 
     myName = username.text.trim();
@@ -110,22 +111,22 @@ class RoomController extends GetxController {
     for (int i = 0; i < words.length; i++) {
       if (i >= 24) {
         final model = WordModel(word: words[i], type: "b", isOpen: false);
-        wordModels.add(model);
+        wordModels[words[i]] = model;
       }
       if (i >= 16 && i < 24) {
         final model = WordModel(word: words[i], type: "w", isOpen: false);
-        wordModels.add(model);
+        wordModels[words[i]] = model;
       }
       if (i >= 8 && i < 16) {
         final model = WordModel(word: words[i], type: "o", isOpen: false);
-        wordModels.add(model);
+        wordModels[words[i]] = model;
       }
       if (i < 8) {
         final model = WordModel(word: words[i], type: "p", isOpen: false);
-        wordModels.add(model);
+        wordModels[words[i]] = model;
       }
     }
-    wordModels.shuffle();
+    //wordModels.shuffle();
   }
 
   void switchTeam() {
