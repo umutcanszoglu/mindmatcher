@@ -69,7 +69,9 @@ class TopBarWidget extends GetView<RoomController> {
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text("Team Purple's Master Gives FILM - 3", style: FontStyles.smallButtonBlack),
+                    ...controller.room.value!.gameLogs.entries.map((kv) => Text(
+                        "${kv.value.team ? 'Purple' : 'Orange'} - ${kv.value.name} - ${kv.value.answer}",
+                        style: FontStyles.smallButtonBlack))
                   ],
                 ),
               ),

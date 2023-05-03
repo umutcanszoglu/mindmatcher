@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mindmatcher/consts/icons.dart';
@@ -42,23 +43,31 @@ class CreateRoomPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: MyButton(
-                      borderColor: purple,
-                      color: white,
+                      color: orange,
                       text: "Create",
                       height: 60,
-                      textStyle: FontStyles.buttonsPurple,
+                      textStyle: FontStyles.buttons,
                       onTap: () {
-                        Get.to(const CategoryPage());
+                        if (controller.username.text == "") {
+                          EasyLoading.showToast(
+                            "Please enter username.",
+                            duration: const Duration(seconds: 1),
+                            maskType: EasyLoadingMaskType.black,
+                          );
+                        } else {
+                          Get.to(const CategoryPage());
+                        }
                       },
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
                     child: MyButton(
-                      color: orange,
+                      borderColor: purple,
+                      color: white,
                       text: "Join",
                       height: 60,
-                      textStyle: FontStyles.buttons,
+                      textStyle: FontStyles.buttonsPurple,
                       onTap: () {
                         Get.dialog(
                           AlertDialog(
@@ -84,24 +93,32 @@ class CreateRoomPage extends StatelessWidget {
                                   Expanded(
                                     child: MyButton(
                                       text: "Back",
-                                      textStyle: FontStyles.smallButtonwhite,
-                                      color: orange,
+                                      textStyle: FontStyles.smallButtonPurple,
+                                      color: Colors.transparent,
+                                      borderColor: purple,
                                       width: double.infinity,
                                       height: 40,
+                                      onTap: Get.back,
                                     ),
                                   ),
                                   const SizedBox(width: 8),
                                   Expanded(
                                     child: MyButton(
                                       text: "Join",
-                                      textStyle: FontStyles.smallButtonPurple,
-                                      color: Colors.transparent,
-                                      borderColor: purple,
+                                      textStyle: FontStyles.smallButtonwhite,
+                                      color: orange,
                                       width: double.infinity,
                                       height: 40,
                                       onTap: () {
-                                        Get.snackbar("title", "message");
-                                        controller.joinRoom();
+                                        if (controller.username.text == "") {
+                                          EasyLoading.showToast(
+                                            "Please enter username.",
+                                            duration: const Duration(seconds: 1),
+                                            maskType: EasyLoadingMaskType.black,
+                                          );
+                                        } else {
+                                          controller.joinRoom();
+                                        }
                                       },
                                     ),
                                   ),

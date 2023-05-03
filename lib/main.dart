@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:mindmatcher/consts/theme.dart';
 import 'package:mindmatcher/firebase_options.dart';
 import 'package:mindmatcher/screens/start_game.dart';
 
@@ -13,7 +14,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  EasyLoading.instance.indicatorType = EasyLoadingIndicatorType.fadingCircle;
+  EasyLoading.instance
+    ..indicatorType = EasyLoadingIndicatorType.ring
+    ..textStyle = FontStyles.smallButtonwhite;
   Animate.restartOnHotReload = true;
   runApp(const MyApp());
 }

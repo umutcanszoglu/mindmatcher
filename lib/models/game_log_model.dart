@@ -5,12 +5,12 @@ class GameLogModel {
   bool team;
   bool role;
   String name;
-  String answers;
+  String answer;
   GameLogModel({
     required this.team,
     required this.role,
     required this.name,
-    required this.answers,
+    required this.answer,
   });
 
   Map<String, dynamic> toMap() {
@@ -18,7 +18,7 @@ class GameLogModel {
       'team': team,
       'role': role,
       'name': name,
-      'answers': answers,
+      'answer': answer,
     };
   }
 
@@ -27,7 +27,7 @@ class GameLogModel {
       team: map['team'] as bool,
       role: map['role'] as bool,
       name: map['name'] as String,
-      answers: map['answers'] as String,
+      answer: map['answer'] as String,
     );
   }
 

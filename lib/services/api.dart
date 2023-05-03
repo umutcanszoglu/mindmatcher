@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mindmatcher/models/game_log_model.dart';
 import 'package:mindmatcher/models/game_room_model.dart';
 import 'package:mindmatcher/models/player_model.dart';
 
@@ -73,12 +74,42 @@ class Api {
     }
   }
 
+  static Future<bool> logToRoom(String roomUid, GameLogModel log) async {
+    try {
+      await _firestore
+          .collection("rooms")
+          .doc(roomUid)
+          .update({"gameLogs.${log.answer}": log.toMap()});
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   static Future<bool> switchTeam(String roomUid, Player player) async {
     try {
       await _firestore
           .collection("rooms")
           .doc(roomUid)
           .update({"players.${player.name}": player.copyWith(team: !player.team).toMap()});
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static Future<bool> switchTeamTurn(String roomUid, bool turn) async {
+    try {
+      await _firestore.collection("rooms").doc(roomUid).update({"teamTurn": turn});
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static Future<bool> switchRoleTurn(String roomUid, bool turn) async {
+    try {
+      await _firestore.collection("rooms").doc(roomUid).update({"roleTurn": turn});
       return true;
     } catch (_) {
       return false;
@@ -110,6 +141,24 @@ class Api {
   static Future<bool> openWord(String roomUid, String word) async {
     try {
       await _firestore.collection("rooms").doc(roomUid).update({"words.$word.isOpen": true});
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static Future<bool> setWinner(String roomUid, bool team) async {
+    try {
+      await _firestore.collection("rooms").doc(roomUid).update({"winner": team});
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static Future<bool> deleteRoom(String roomUid) async {
+    try {
+      await _firestore.collection("rooms").doc(roomUid).delete();
       return true;
     } catch (_) {
       return false;

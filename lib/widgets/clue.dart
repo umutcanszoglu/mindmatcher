@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/consts/icons.dart';
 import 'package:mindmatcher/consts/theme.dart';
+import 'package:mindmatcher/controllers/clue_controller.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
 import 'package:mindmatcher/widgets/my_button.dart';
 import 'package:mindmatcher/widgets/my_textfield.dart';
@@ -14,6 +15,7 @@ class ClueWidget extends StatelessWidget {
   final RoomController controller;
   @override
   Widget build(BuildContext context) {
+    final clueController = Get.put(ClueController());
     return Obx(() {
       final color = controller.room.value?.teamTurn ?? false ? purple : orange;
 
@@ -29,7 +31,7 @@ class ClueWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              "current clue is xxxx",
+              "---",
               style: FontStyles.bodyWhite
                   .copyWith(color: controller.room.value?.teamTurn ?? false ? white : black),
             ),
@@ -39,7 +41,7 @@ class ClueWidget extends StatelessWidget {
           children: [
             Expanded(
               child: MyTextField(
-                //controller: controller.clue,
+                controller: clueController.clue,
                 prefixIcon: infoIcon,
                 prefixIconColor: color,
                 borderColor: white,
@@ -50,7 +52,7 @@ class ClueWidget extends StatelessWidget {
             SizedBox(
               width: 90,
               child: MyTextField(
-                //controller: controller.clueCount,
+                controller: clueController.count,
                 hintText: "0",
                 prefixIcon: numberIcon,
                 prefixIconColor: color,
@@ -60,7 +62,11 @@ class ClueWidget extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             MyButton(
-              //onTap: () => controller.getClues(),
+              onTap: () {
+                controller.changeRoleTurn(false);
+                controller.log(clueController.getClue());
+                clueController.resetFields();
+              },
               width: 60,
               height: 60,
               color: color,

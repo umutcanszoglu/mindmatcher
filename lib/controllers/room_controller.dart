@@ -4,10 +4,13 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:mindmatcher/models/game_log_model.dart';
 import 'package:mindmatcher/models/game_room_model.dart';
 import 'package:mindmatcher/models/player_model.dart';
 import 'package:mindmatcher/models/word_model.dart';
 import 'package:mindmatcher/screens/game_page.dart';
+import 'package:mindmatcher/screens/result_page.dart';
+import 'package:mindmatcher/screens/start_game.dart';
 import 'package:mindmatcher/services/api.dart';
 
 class RoomController extends GetxController {
@@ -19,6 +22,8 @@ class RoomController extends GetxController {
   final joinKey = TextEditingController();
 
   final wordModels = SplayTreeMap<String, WordModel>();
+
+  bool blackKey = false;
 
   //List<WordModel> get words => room.value!.words;
 
@@ -51,10 +56,11 @@ class RoomController extends GetxController {
       uid: "",
       creator: "",
       teamTurn: false,
-      roleTurn: false,
+      roleTurn: true,
       players: {},
-      gameLogs: [],
+      gameLogs: {},
       words: SplayTreeMap<String, WordModel>(),
+      winner: false,
     );
 
     myName = username.text.trim();
@@ -97,9 +103,32 @@ class RoomController extends GetxController {
     getRoomHandle = Api.roomStream(uid).listen(roomUpdate);
   }
 
-  void roomUpdate(GameRoomModel gameRoomModel) {
+  void roomUpdate(GameRoomModel gameRoomModel) async {
     final wasNull = room.value == null;
     room.value = gameRoomModel;
+    final pL =
+        gameRoomModel.words.entries.where((e) => e.value.type == "p" && !e.value.isOpen).length;
+    final oL =
+        gameRoomModel.words.entries.where((e) => e.value.type == "o" && !e.value.isOpen).length;
+
+    final blackOpen = gameRoomModel.words.entries.any((e) => e.value.type == "b" && e.value.isOpen);
+
+    // if black one opened
+    if (blackOpen && !blackKey) {
+      blackKey = true;
+      await Api.setWinner(room.value?.uid ?? "", !(gameRoomModel.teamTurn));
+      Get.to(const ResultPage());
+    }
+    // if purple's win
+    if (pL == 0) {
+      await Api.setWinner(room.value?.uid ?? "", true);
+      Get.to(const ResultPage());
+    }
+    // if orange's win
+    if (oL == 0) {
+      await Api.setWinner(room.value?.uid ?? "", false);
+      Get.to(const ResultPage());
+    }
 
     if (wasNull) {
       EasyLoading.dismiss();
@@ -126,7 +155,6 @@ class RoomController extends GetxController {
         wordModels[words[i]] = model;
       }
     }
-    //wordModels.shuffle();
   }
 
   void switchTeam() {
@@ -140,6 +168,42 @@ class RoomController extends GetxController {
   void selectRole(bool role) {
     Api.selectRole(room.value?.uid ?? "", user, role);
     Get.back();
+  }
+
+  void changeTeamTurn(bool turn) {
+    Api.switchTeamTurn(room.value?.uid ?? "", turn);
+  }
+
+  void changeRoleTurn(bool turn) {
+    Api.switchRoleTurn(room.value?.uid ?? "", turn);
+  }
+
+  void openWord(WordModel word) async {
+    final room = this.room.value!;
+
+    if (user.role || room.roleTurn || user.team != room.teamTurn) return;
+
+    final hasOpen = await Api.openWord(room.uid, word.word);
+
+    if (hasOpen && ((room.teamTurn && word.type != "p") || (!room.teamTurn && word.type != "o"))) {
+      //if (word.type == "b") {}
+
+      Api.switchTeamTurn(room.uid, !room.teamTurn);
+    }
+  }
+
+  void log(String answer) {
+    final entity = GameLogModel(team: user.team, role: user.role, name: user.name, answer: answer);
+    Api.logToRoom(room.value?.uid ?? "", entity);
+  }
+
+  void deleteRoom() async {
+    EasyLoading.show(maskType: EasyLoadingMaskType.clear);
+    getRoomHandle?.pause();
+    await Api.deleteRoom(room.value?.uid ?? "");
+    Get.deleteAll();
+    Get.off(const StartGamePage());
+    EasyLoading.dismiss();
   }
 
   @override
