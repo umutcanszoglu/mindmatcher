@@ -83,10 +83,9 @@ class Api {
 
   static Future<bool> logToRoom(String roomUid, GameLogModel log) async {
     try {
-      await _firestore
-          .collection("rooms")
-          .doc(roomUid)
-          .update({"gameLogs.${log.answer}": log.toMap()});
+      await _firestore.collection("rooms").doc(roomUid).update({
+        "gameLogs": FieldValue.arrayUnion([log.toMap()])
+      });
       return true;
     } catch (_) {
       return false;

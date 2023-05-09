@@ -12,7 +12,7 @@ class GameRoomModel {
   bool teamTurn;
   bool roleTurn;
   Map<String, Player> players;
-  Map<String, GameLogModel> gameLogs;
+  List<GameLogModel> gameLogs;
   SplayTreeMap<String, WordModel> words;
   bool winner;
 
@@ -39,7 +39,7 @@ class GameRoomModel {
     result.addAll({'teamTurn': teamTurn});
     result.addAll({'roleTurn': roleTurn});
     result.addAll({'players': players.map((key, value) => MapEntry(key, value.toMap()))});
-    result.addAll({'gameLogs': gameLogs.map((key, value) => MapEntry(key, value.toMap()))});
+    result.addAll({'gameLogs': gameLogs.map((x) => x.toMap()).toList()});
     result.addAll({'words': words.map((key, value) => MapEntry(key, value.toMap()))});
     result.addAll({'winner': winner});
 
@@ -54,8 +54,11 @@ class GameRoomModel {
       roleTurn: map['roleTurn'] ?? false,
       players:
           Map<String, Player>.from(map['players'].map((k, v) => MapEntry(k, Player.fromMap(v)))),
-      gameLogs: Map<String, GameLogModel>.from(
-          map['gameLogs'].map((k, v) => MapEntry(k, GameLogModel.fromMap(v)))),
+      gameLogs: List<GameLogModel>.from(
+        (map['gameLogs'] as List<dynamic>).map<GameLogModel>(
+          (x) => GameLogModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
       words: SplayTreeMap<String, WordModel>.from(
           map['words'].map((k, v) => MapEntry(k, WordModel.fromMap(v)))),
       winner: map['winner'] ?? false,

@@ -32,7 +32,7 @@ class GamePage extends GetView<RoomController> {
                           .scaleXY(end: 1.1, duration: 600.ms)
                           .then(delay: 600.ms)
                           .scaleXY(end: 1 / 1.1),
-                      SizedBox(height: 24.h),
+                      SizedBox(height: 20.h),
                       const Flexible(
                         child: MyGrid(),
                       ),

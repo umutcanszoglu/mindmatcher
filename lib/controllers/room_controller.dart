@@ -60,7 +60,7 @@ class RoomController extends GetxController {
       teamTurn: false,
       roleTurn: true,
       players: {},
-      gameLogs: {},
+      gameLogs: [],
       words: SplayTreeMap<String, WordModel>(),
       winner: false,
     );

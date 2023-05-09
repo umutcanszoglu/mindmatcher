@@ -85,8 +85,8 @@ class TopBarWidget extends GetView<RoomController> {
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    ...controller.room.value!.gameLogs.entries.map((kv) => Text(
-                        "${kv.value.team ? 'Purple' : 'Orange'} - ${kv.value.name} - ${kv.value.answer}",
+                    ...controller.room.value!.gameLogs.map((kv) => Text(
+                        "${kv.team ? 'Purple' : 'Orange'} - ${kv.name} - ${kv.answer}",
                         style: FontStyles.smallButtonBlack))
                   ],
                 ),
@@ -192,7 +192,6 @@ class TopBarWidget extends GetView<RoomController> {
                               textStyle: FontStyles.buttons,
                               onTap: () {
                                 controller.selectRole(false);
-                                controller.visibility.value = true;
                               },
                             ),
                           ),

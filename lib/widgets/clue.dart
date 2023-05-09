@@ -36,11 +36,7 @@ class ClueWidget extends StatelessWidget {
               child: Text(
                 controller.room.value!.gameLogs.isEmpty
                     ? "🎶🎤🗿  🎸🗿  🎷🗿"
-                    : controller.room.value!.gameLogs.entries
-                        .where((element) => element.value.role)
-                        .last
-                        .value
-                        .answer,
+                    : "${controller.room.value!.teamTurn ? "Purple" : "Orange  "} / ${controller.room.value!.roleTurn ? "narrator" : controller.room.value!.gameLogs.where((element) => element.role).last.answer}",
                 style: FontStyles.bodyWhite
                     .copyWith(color: controller.room.value?.teamTurn ?? false ? white : black),
               ),
