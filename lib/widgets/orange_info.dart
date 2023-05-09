@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mindmatcher/consts/theme.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
 
@@ -19,21 +20,21 @@ class OrangeInfo extends StatelessWidget {
           "Orange",
           style: FontStyles.bodyWhite.copyWith(color: color),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.h),
         Text(
           orangeIsClosed.toString(),
           style: FontStyles.bodyWhite.copyWith(color: color),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.h),
         Text(
           "Predictors",
           style: FontStyles.smallButtonwhite.copyWith(color: color),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.h),
         Container(
           padding: const EdgeInsets.all(4),
-          width: 130,
-          height: 100,
+          width: 130.w,
+          height: 100.h,
           decoration: BoxDecoration(
             color: controller.room.value?.teamTurn ?? false
                 ? const Color.fromARGB(255, 139, 96, 210)
@@ -55,12 +56,12 @@ class OrangeInfo extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Text(
           "Narrator",
           style: FontStyles.smallButtonwhite.copyWith(color: color),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.h),
         Text(
           controller.orangeNarrator?.name ?? "🎤🗿",
           style: FontStyles.smallButtonwhite.copyWith(color: color),

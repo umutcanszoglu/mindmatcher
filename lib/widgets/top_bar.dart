@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/consts/theme.dart';
+import 'package:mindmatcher/controllers/category_controller.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
+import 'package:mindmatcher/services/api.dart';
 import 'package:mindmatcher/widgets/game_log.dart';
 import 'package:mindmatcher/widgets/my_button.dart';
 import 'package:mindmatcher/widgets/players_card.dart';
 import 'package:mindmatcher/widgets/rules_card.dart';
 import 'package:mindmatcher/widgets/user_card.dart';
+import 'package:share_plus/share_plus.dart';
 
 class TopBarWidget extends GetView<RoomController> {
   const TopBarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final catController = Get.find<CategoryController>();
     return Row(
       children: [
         //Players
@@ -21,7 +26,7 @@ class TopBarWidget extends GetView<RoomController> {
             Get.dialog(
               AlertDialog(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-                actionsPadding: const EdgeInsets.only(bottom: 16, left: 24, right: 24),
+                actionsPadding: EdgeInsets.only(bottom: 16.h, left: 24.w, right: 24.w),
                 actionsAlignment: MainAxisAlignment.center,
                 backgroundColor: white,
                 title: Text(
@@ -30,8 +35,8 @@ class TopBarWidget extends GetView<RoomController> {
                   textAlign: TextAlign.center,
                 ),
                 content: Obx(
-                  () => Column(
-                    mainAxisSize: MainAxisSize.min,
+                  () => Wrap(
+                    spacing: 8,
                     children: [
                       ...controller.room.value!.players.entries.map(
                         (e) => Chip(
@@ -43,22 +48,33 @@ class TopBarWidget extends GetView<RoomController> {
                             style: FontStyles.smallButtonBlack,
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
+                actions: [
+                  MyButton(
+                    text: "Invite",
+                    textStyle: FontStyles.buttons,
+                    color: blue,
+                    height: 50.h,
+                    onTap: () {
+                      Share.share(controller.room.value?.uid ?? "");
+                    },
+                  )
+                ],
               ),
             );
           },
         ),
-        const SizedBox(width: 4),
+        SizedBox(width: 4.w),
         //GameLog
         GameLogCard(
           onTap: () {
             Get.dialog(
               AlertDialog(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-                actionsPadding: const EdgeInsets.only(bottom: 16, left: 24, right: 24),
+                actionsPadding: EdgeInsets.only(bottom: 16.h, left: 24.w, right: 24.w),
                 actionsAlignment: MainAxisAlignment.center,
                 backgroundColor: white,
                 title: Text(
@@ -78,14 +94,14 @@ class TopBarWidget extends GetView<RoomController> {
             );
           },
         ),
-        const SizedBox(width: 4),
+        SizedBox(width: 4.w),
         //Rules
         RulesCard(
           onTap: () {
             Get.dialog(
               AlertDialog(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-                actionsPadding: const EdgeInsets.only(bottom: 16, left: 24, right: 24),
+                actionsPadding: EdgeInsets.only(bottom: 16.h, left: 24.w, right: 24.w),
                 actionsAlignment: MainAxisAlignment.center,
                 backgroundColor: white,
                 title: Text(
@@ -104,18 +120,20 @@ class TopBarWidget extends GetView<RoomController> {
             );
           },
         ),
-        const SizedBox(width: 45),
+        SizedBox(width: 45.w),
         //User
         UserCard(
           onTap: () {
             Get.dialog(
               AlertDialog(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-                actionsPadding: const EdgeInsets.only(bottom: 16),
+                actionsPadding: EdgeInsets.only(bottom: 16.h),
                 actionsAlignment: MainAxisAlignment.center,
                 backgroundColor: white,
                 title: Text(
-                  "${controller.user.name}'s Profile",
+                  controller.user.name == controller.room.value!.creator
+                      ? "♛ ${controller.user.name}'s Room ♛"
+                      : "${controller.user.name}'s Profile",
                   style: FontStyles.bodyBlack,
                   textAlign: TextAlign.center,
                 ),
@@ -128,53 +146,74 @@ class TopBarWidget extends GetView<RoomController> {
                         style: FontStyles.bodyBlack
                             .copyWith(color: controller.user.team ? purple : orange),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       Text(
                         controller.user.role ? "Role: Narrator" : "Role: Predictor",
                         style: FontStyles.bodyBlack
                             .copyWith(color: controller.user.role ? red : green),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       MyButton(
                         color: controller.user.team ? purple : orange,
                         text: "Switch Team",
-                        width: 150,
-                        height: 40,
-                        textStyle: FontStyles.buttons,
+                        width: 180.w,
+                        height: 40.h,
+                        textStyle: FontStyles.buttons
+                            .copyWith(color: controller.user.team ? white : black),
                         onTap: () {
                           controller.switchTeam();
                         },
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       Text("Select Role", style: FontStyles.bodyBlack),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       Row(
                         children: [
+                          if (controller.visibility.value)
+                            Expanded(
+                              child: MyButton(
+                                color: red,
+                                text: "Narrator",
+                                width: 120.w,
+                                height: 40.h,
+                                textStyle: FontStyles.buttons,
+                                onTap: () {
+                                  controller.selectRole(true);
+                                },
+                              ),
+                            ),
+                          if (controller.visibility.value) SizedBox(width: 8.w),
                           Expanded(
                             child: MyButton(
-                              color: red,
-                              text: "Narrator",
-                              width: 120,
-                              height: 40,
+                              color: green,
+                              text: "Predictor",
+                              width: 120.w,
+                              height: 40.h,
                               textStyle: FontStyles.buttons,
                               onTap: () {
-                                controller.selectRole(true);
+                                controller.selectRole(false);
+                                controller.visibility.value = true;
                               },
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          MyButton(
-                            color: green,
-                            text: "Predictor",
-                            width: 120,
-                            height: 40,
-                            textStyle: FontStyles.buttons,
-                            onTap: () {
-                              controller.selectRole(false);
-                            },
-                          ),
                         ],
                       ),
+                      SizedBox(height: 16.h),
+                      if (controller.user.name == controller.room.value!.creator)
+                        MyButton(
+                          text: "Reset",
+                          textStyle: FontStyles.buttons
+                              .copyWith(color: controller.user.team ? white : black),
+                          color: controller.user.team ? purple : orange,
+                          width: 100.w,
+                          height: 40.h,
+                          onTap: () async {
+                            final words = await catController.getGameWords();
+
+                            await Api.resetWords(
+                                controller.room.value?.uid ?? "", controller.getWordModels(words));
+                          },
+                        ),
                     ],
                   ),
                 ),

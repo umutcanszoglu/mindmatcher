@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/consts/theme.dart';
 import 'package:mindmatcher/controllers/category_controller.dart';
@@ -20,7 +21,7 @@ class CategoryPage extends StatelessWidget {
       backgroundColor: white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 48.0, vertical: 24),
+          padding: EdgeInsets.symmetric(horizontal: 48.0.w, vertical: 24.h),
           child: Obx(
             () => controller.isLoading.value
                 ? const Center(
@@ -30,11 +31,11 @@ class CategoryPage extends StatelessWidget {
                     physics: const BouncingScrollPhysics(),
                     children: [
                       Text("Category", style: FontStyles.headers, textAlign: TextAlign.center),
-                      const SizedBox(height: 32),
+                      SizedBox(height: 32.h),
                       Obx(
                         () => SizedBox(
-                          width: double.infinity,
-                          height: Get.height / 1.6,
+                          width: double.infinity.w,
+                          height: (Get.height / 1.6).h,
                           child: ListView(
                             physics: const BouncingScrollPhysics(),
                             children: controller.categories
@@ -42,7 +43,7 @@ class CategoryPage extends StatelessWidget {
                                 .entries
                                 .map(
                                   (e) => Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    padding: EdgeInsets.only(bottom: 8.0.h),
                                     child: CategoryCard(
                                       model: e.value,
                                       onTap: () {
@@ -56,21 +57,25 @@ class CategoryPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 32),
+                      SizedBox(height: 32.h),
                       MyButton(
                         color: orange,
-                        width: double.infinity,
-                        height: 60,
+                        width: double.infinity.w,
+                        height: 60.h,
                         text: "Next",
                         textStyle: FontStyles.buttons,
                         onTap: () async {
                           EasyLoading.show(maskType: EasyLoadingMaskType.clear);
                           final words = await controller.getGameWords();
-                          //print(words);
-                          roomController.fillWordModels(words);
-                          //print(models[0].word);
-                          roomController.createRoom();
-                          //print(roomController.room.value?.words[0].word);
+                          if (words.isEmpty) {
+                            EasyLoading.showToast(
+                              "Select Category",
+                              duration: const Duration(seconds: 1),
+                            );
+                          } else {
+                            roomController.wordModels = roomController.getWordModels(words);
+                            roomController.createRoom();
+                          }
                         },
                       ),
                     ],

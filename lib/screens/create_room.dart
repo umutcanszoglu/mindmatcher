@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mindmatcher/consts/icons.dart';
 import 'package:mindmatcher/consts/theme.dart';
+import 'package:mindmatcher/controllers/category_controller.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
 import 'package:mindmatcher/screens/category_page.dart';
 import 'package:mindmatcher/widgets/my_button.dart';
@@ -14,13 +16,15 @@ class CreateRoomPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(CategoryController());
+
     final controller = Get.put(RoomController());
 
     return Scaffold(
       backgroundColor: white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(24.0.w),
           child: ListView(
             physics: const BouncingScrollPhysics(),
             children: [
@@ -29,7 +33,7 @@ class CreateRoomPage extends StatelessWidget {
                 style: FontStyles.headers,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 48),
+              SizedBox(height: 48.h),
               Lottie.asset("assets/lotties/create.json"),
               MyTextField(
                 controller: controller.username,
@@ -38,14 +42,14 @@ class CreateRoomPage extends StatelessWidget {
                 hintText: "username",
                 borderColor: dirtyWhite,
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
               Row(
                 children: [
                   Expanded(
                     child: MyButton(
                       color: orange,
                       text: "Create",
-                      height: 60,
+                      height: 60.h,
                       textStyle: FontStyles.buttons,
                       onTap: () {
                         if (controller.username.text == "") {
@@ -60,19 +64,19 @@ class CreateRoomPage extends StatelessWidget {
                       },
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: 16.w),
                   Expanded(
                     child: MyButton(
                       borderColor: purple,
                       color: white,
                       text: "Join",
-                      height: 60,
+                      height: 60.h,
                       textStyle: FontStyles.buttonsPurple,
                       onTap: () {
                         Get.dialog(
                           AlertDialog(
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-                            actionsPadding: const EdgeInsets.only(bottom: 16, left: 24, right: 24),
+                            actionsPadding: EdgeInsets.only(bottom: 16.h, left: 24.w, right: 24.w),
                             actionsAlignment: MainAxisAlignment.center,
                             backgroundColor: dirtyWhite,
                             title: Text(
@@ -97,18 +101,18 @@ class CreateRoomPage extends StatelessWidget {
                                       color: Colors.transparent,
                                       borderColor: purple,
                                       width: double.infinity,
-                                      height: 40,
+                                      height: 40.h,
                                       onTap: Get.back,
                                     ),
                                   ),
-                                  const SizedBox(width: 8),
+                                  SizedBox(width: 8.w),
                                   Expanded(
                                     child: MyButton(
                                       text: "Join",
                                       textStyle: FontStyles.smallButtonwhite,
                                       color: orange,
                                       width: double.infinity,
-                                      height: 40,
+                                      height: 40.h,
                                       onTap: () {
                                         if (controller.username.text == "") {
                                           EasyLoading.showToast(

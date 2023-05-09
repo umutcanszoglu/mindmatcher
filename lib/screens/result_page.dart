@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/consts/theme.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
@@ -12,7 +13,7 @@ class ResultPage extends GetView<RoomController> {
     return Scaffold(
       backgroundColor: white,
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -20,10 +21,10 @@ class ResultPage extends GetView<RoomController> {
               controller.room.value!.winner == controller.user.team ? "You Win" : "You Lost",
               style: FontStyles.headers.copyWith(color: controller.user.team ? purple : orange),
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
             MyButton(
-              width: double.infinity,
-              height: 60,
+              width: double.infinity.w,
+              height: 60.h,
               color: controller.user.team ? purple : orange,
               text: "Go To Main Page",
               textStyle: FontStyles.buttons.copyWith(color: controller.user.team ? white : black),

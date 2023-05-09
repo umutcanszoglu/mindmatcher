@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const purple = Color(0xff5D3891);
@@ -15,12 +16,12 @@ class FontStyles {
   static TextStyle headers = GoogleFonts.righteous(
     color: purple,
     fontSize: 64,
-    textStyle: const TextStyle(
+    textStyle: TextStyle(
       shadows: [
         Shadow(
           blurRadius: 5.0, // shadow blur
           color: Colors.grey, // shadow color
-          offset: Offset(3.0, 3.0), // how much shadow will be shown
+          offset: Offset(3.0, 3.0.h), // how much shadow will be shown
         ),
       ],
     ),

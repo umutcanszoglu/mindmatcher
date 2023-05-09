@@ -20,12 +20,18 @@ class UserCard extends GetView<RoomController> {
           color: dirtyWhite,
           borderRadius: BorderRadius.circular(16),
         ),
-        child: Center(
-          child: Text(
-            controller.myName,
-            style: FontStyles.smallButtonBlack.copyWith(
-              color: black,
-            ),
+        child: Obx(
+          () => Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(
+                controller.myName,
+                style: FontStyles.smallButtonBlack.copyWith(
+                  color: black,
+                ),
+              ),
+              Icon(Icons.circle, size: 20, color: controller.user.team ? purple : orange),
+            ],
           ),
         ),
       ),

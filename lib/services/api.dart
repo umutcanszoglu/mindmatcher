@@ -1,15 +1,22 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mindmatcher/models/game_log_model.dart';
 import 'package:mindmatcher/models/game_room_model.dart';
 import 'package:mindmatcher/models/player_model.dart';
+import 'package:mindmatcher/models/word_model.dart';
 
 class Api {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  static Stream<GameRoomModel> roomStream(String uid) {
+  static Stream<GameRoomModel?> roomStream(String uid) {
     final sp = _firestore.collection("rooms").doc(uid).snapshots();
-    return sp.map((e) => GameRoomModel.fromMap(e.data()!));
+    return sp.map((e) {
+      final data = e.data();
+      if (data == null) return null;
+      return GameRoomModel.fromMap(data);
+    });
   }
 
   static Future<String?> createRoom(GameRoomModel room) async {
@@ -159,6 +166,17 @@ class Api {
   static Future<bool> deleteRoom(String roomUid) async {
     try {
       await _firestore.collection("rooms").doc(roomUid).delete();
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static Future<bool> resetWords(String roomUid, SplayTreeMap<String, WordModel> words) async {
+    try {
+      await _firestore.collection("rooms").doc(roomUid).update(
+          {"words": words.map((key, value) => MapEntry(key, value.toMap())), "gameLogs": {}});
+
       return true;
     } catch (_) {
       return false;

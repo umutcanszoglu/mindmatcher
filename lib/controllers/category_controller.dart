@@ -12,6 +12,7 @@ class CategoryController extends GetxController {
   final isLoading = true.obs;
 
   Future<void> wordPool() async {
+    selectedCategories.clear();
     for (var category in categories) {
       if (category.isSelected) {
         selectedCategories.add(category);
@@ -28,7 +29,7 @@ class CategoryController extends GetxController {
         },
       ),
     );
-
+    gameWords.clear();
     for (final words in wordsList) {
       gameWords.addAll(words.map<String>((e) => e.toString()));
     }
@@ -53,8 +54,6 @@ class CategoryController extends GetxController {
     }
 
     isLoading.value = false;
-
-    //fillWordModels();
 
     super.onInit();
   }

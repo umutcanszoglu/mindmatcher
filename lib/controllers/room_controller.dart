@@ -14,14 +14,16 @@ import 'package:mindmatcher/screens/start_game.dart';
 import 'package:mindmatcher/services/api.dart';
 
 class RoomController extends GetxController {
-  StreamSubscription<GameRoomModel>? getRoomHandle;
+  StreamSubscription<GameRoomModel?>? getRoomHandle;
 
   final room = Rxn<GameRoomModel>();
 
   final username = TextEditingController();
   final joinKey = TextEditingController();
 
-  final wordModels = SplayTreeMap<String, WordModel>();
+  var wordModels = SplayTreeMap<String, WordModel>();
+
+  final visibility = true.obs;
 
   bool blackKey = false;
 
@@ -49,7 +51,7 @@ class RoomController extends GetxController {
     }
   }
 
-  late final String myName;
+  String myName = "";
 
   void createRoom() async {
     final tempRoom = GameRoomModel(
@@ -103,9 +105,12 @@ class RoomController extends GetxController {
     getRoomHandle = Api.roomStream(uid).listen(roomUpdate);
   }
 
-  void roomUpdate(GameRoomModel gameRoomModel) async {
+  void roomUpdate(GameRoomModel? gameRoomModel) async {
     final wasNull = room.value == null;
     room.value = gameRoomModel;
+    if (gameRoomModel == null) return null;
+    visibility.value =
+        !room.value!.players.entries.any((e) => (user.team == e.value.team) && e.value.role);
     final pL =
         gameRoomModel.words.entries.where((e) => e.value.type == "p" && !e.value.isOpen).length;
     final oL =
@@ -136,30 +141,35 @@ class RoomController extends GetxController {
     }
   }
 
-  void fillWordModels(List<String> words) {
+  SplayTreeMap<String, WordModel> getWordModels(List<String> words) {
+    final wm = SplayTreeMap<String, WordModel>();
     for (int i = 0; i < words.length; i++) {
       if (i >= 24) {
         final model = WordModel(word: words[i], type: "b", isOpen: false);
-        wordModels[words[i]] = model;
+        wm[words[i]] = model;
       }
       if (i >= 16 && i < 24) {
         final model = WordModel(word: words[i], type: "w", isOpen: false);
-        wordModels[words[i]] = model;
+        wm[words[i]] = model;
       }
       if (i >= 8 && i < 16) {
         final model = WordModel(word: words[i], type: "o", isOpen: false);
-        wordModels[words[i]] = model;
+        wm[words[i]] = model;
       }
       if (i < 8) {
         final model = WordModel(word: words[i], type: "p", isOpen: false);
-        wordModels[words[i]] = model;
+        wm[words[i]] = model;
       }
     }
+
+    return wm;
   }
 
   void switchTeam() {
-    if (user.role == true) {
+    if (user.role) {
       Api.switchProblem(room.value?.uid ?? "", user);
+      visibility.value = false;
+      user.role = false;
     } else {
       Api.switchTeam(room.value?.uid ?? "", user);
     }
@@ -189,6 +199,7 @@ class RoomController extends GetxController {
       //if (word.type == "b") {}
 
       Api.switchTeamTurn(room.uid, !room.teamTurn);
+      Api.switchRoleTurn(room.uid, !room.roleTurn);
     }
   }
 
@@ -199,7 +210,7 @@ class RoomController extends GetxController {
 
   void deleteRoom() async {
     EasyLoading.show(maskType: EasyLoadingMaskType.clear);
-    getRoomHandle?.pause();
+    await getRoomHandle?.cancel();
     await Api.deleteRoom(room.value?.uid ?? "");
     Get.deleteAll();
     Get.off(const StartGamePage());

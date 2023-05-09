@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mindmatcher/consts/theme.dart';
 
 class FlagCard extends StatelessWidget {
@@ -8,8 +9,8 @@ class FlagCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 60,
-      height: 60,
+      width: 60.w,
+      height: 60.h,
       decoration: const BoxDecoration(
         color: dirtyWhite,
         shape: BoxShape.circle,
@@ -17,7 +18,7 @@ class FlagCard extends StatelessWidget {
       child: Center(
         child: Text(
           flag,
-          style: const TextStyle(fontSize: 24),
+          style: TextStyle(fontSize: 24.sp),
         ),
       ),
     );

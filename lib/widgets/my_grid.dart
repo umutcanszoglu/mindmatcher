@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
 import 'package:mindmatcher/widgets/game_card.dart';
@@ -16,8 +17,8 @@ class MyGrid extends GetView<RoomController> {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            crossAxisSpacing: 4.0,
-            mainAxisSpacing: 4.0,
+            crossAxisSpacing: 4.0.h,
+            mainAxisSpacing: 4.0.w,
             maxCrossAxisExtent: Get.width * 0.2,
           ),
           children: room!.words.entries
