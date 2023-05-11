@@ -208,6 +208,19 @@ class RoomController extends GetxController {
     Api.logToRoom(room.value?.uid ?? "", entity);
   }
 
+  List<String> getPlayersNames() {
+    final names = <String>[];
+
+    for (var i = 0; i < room.value!.players.entries.where((e) => e.value.role).length; i++) {
+      final res = room.value!.players.entries
+          .where((k) => k.value.role)
+          .map((e) => e.value.name)
+          .elementAt(i);
+      names.add(res);
+    }
+    return names;
+  }
+
   void deleteRoom() async {
     EasyLoading.show(maskType: EasyLoadingMaskType.clear);
     await getRoomHandle?.cancel();

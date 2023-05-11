@@ -8,6 +8,7 @@ import 'package:mindmatcher/controllers/clue_controller.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
 import 'package:mindmatcher/widgets/my_button.dart';
 import 'package:mindmatcher/widgets/my_textfield.dart';
+import 'package:type_text/type_text.dart';
 
 class ClueWidget extends StatelessWidget {
   const ClueWidget({
@@ -33,10 +34,11 @@ class ClueWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(24),
             ),
             child: Center(
-              child: Text(
+              child: TypeText(
+                duration: const Duration(seconds: 1),
                 controller.room.value!.gameLogs.isEmpty
-                    ? "🎶🎤🗿  🎸🗿  🎷🗿"
-                    : "${controller.room.value!.teamTurn ? "Purple" : "Orange  "} / ${controller.room.value!.roleTurn ? "narrator" : controller.room.value!.gameLogs.where((element) => element.role).last.answer}",
+                    ? "github/umutcanszoglu"
+                    : "${controller.room.value!.teamTurn ? "Purple" : "Orange"} / ${controller.room.value!.roleTurn ? "narrator" : controller.room.value!.gameLogs.where((element) => element.role).last.answer}",
                 style: FontStyles.bodyWhite
                     .copyWith(color: controller.room.value?.teamTurn ?? false ? white : black),
               ),

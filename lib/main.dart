@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -18,7 +17,7 @@ void main() async {
   EasyLoading.instance
     ..indicatorType = EasyLoadingIndicatorType.ring
     ..textStyle = FontStyles.smallButtonwhite;
-  Animate.restartOnHotReload = true;
+  //Animate.restartOnHotReload = true;
   runApp(const MyApp());
 }
 

@@ -171,10 +171,19 @@ class Api {
     }
   }
 
-  static Future<bool> resetWords(String roomUid, SplayTreeMap<String, WordModel> words) async {
+  static Future<bool> resetWords(
+      String roomUid, SplayTreeMap<String, WordModel> words, List<String> names) async {
     try {
-      await _firestore.collection("rooms").doc(roomUid).update(
-          {"words": words.map((key, value) => MapEntry(key, value.toMap())), "gameLogs": {}});
+      for (var player in names) {
+        await _firestore.collection("rooms").doc(roomUid).update({"players.$player.role": false});
+      }
+
+      await _firestore.collection("rooms").doc(roomUid).update({
+        "words": words.map((key, value) => MapEntry(key, value.toMap())),
+        "gameLogs": [],
+        "roleTurn": true,
+        "teamTurn": false
+      });
 
       return true;
     } catch (_) {

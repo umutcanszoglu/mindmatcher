@@ -209,8 +209,8 @@ class TopBarWidget extends GetView<RoomController> {
                           onTap: () async {
                             final words = await catController.getGameWords();
 
-                            await Api.resetWords(
-                                controller.room.value?.uid ?? "", controller.getWordModels(words));
+                            await Api.resetWords(controller.room.value?.uid ?? "",
+                                controller.getWordModels(words), controller.getPlayersNames());
                           },
                         ),
                     ],
