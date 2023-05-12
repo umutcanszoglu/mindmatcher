@@ -22,14 +22,19 @@ class StartGamePage extends StatelessWidget {
             children: [
               const Spacer(),
               Text(
-                "MIND MATCHER",
+                "MIND",
                 style: FontStyles.headers,
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                "MATCHER",
+                style: FontStyles.headers.copyWith(color: orange),
                 textAlign: TextAlign.center,
               ),
               const Spacer(),
               Text(
                 "Play with your friends",
-                style: FontStyles.bodyOrange,
+                style: FontStyles.bodyBlack,
               ),
               Lottie.asset("assets/lotties/intro.json"),
               Divider(

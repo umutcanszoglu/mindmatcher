@@ -8,6 +8,7 @@ import 'package:mindmatcher/services/api.dart';
 import 'package:mindmatcher/widgets/game_log.dart';
 import 'package:mindmatcher/widgets/my_button.dart';
 import 'package:mindmatcher/widgets/players_card.dart';
+import 'package:mindmatcher/widgets/rules.dart';
 import 'package:mindmatcher/widgets/rules_card.dart';
 import 'package:mindmatcher/widgets/user_card.dart';
 import 'package:share_plus/share_plus.dart';
@@ -104,16 +105,33 @@ class TopBarWidget extends GetView<RoomController> {
                 actionsPadding: EdgeInsets.only(bottom: 16.h, left: 24.w, right: 24.w),
                 actionsAlignment: MainAxisAlignment.center,
                 backgroundColor: white,
-                title: Text(
-                  "Game Rules",
-                  style: FontStyles.bodyBlack,
-                  textAlign: TextAlign.center,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "MIND",
+                      style: FontStyles.header2,
+                    ),
+                    SizedBox(width: 8.w),
+                    Text(
+                      "MATCHER",
+                      style: FontStyles.header2.copyWith(color: orange),
+                    ),
+                  ],
                 ),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text("Each teams has to choose their masters.",
-                        style: FontStyles.smallButtonBlack),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      width: 300.w,
+                      height: 400.h,
+                      decoration: BoxDecoration(
+                        color: purple,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: const Rules(),
+                    ),
                   ],
                 ),
               ),

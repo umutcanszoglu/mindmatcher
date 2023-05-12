@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/consts/theme.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
@@ -15,7 +16,7 @@ class UserCard extends GetView<RoomController> {
         duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.symmetric(horizontal: 8),
         width: Get.width / 4,
-        height: 40,
+        height: 40.h,
         decoration: BoxDecoration(
           color: dirtyWhite,
           borderRadius: BorderRadius.circular(16),

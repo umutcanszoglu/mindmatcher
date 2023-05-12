@@ -33,9 +33,7 @@ class RoomController extends GetxController {
 
   Player? get purpleNarrator {
     try {
-      return room.value!.players.entries
-          .firstWhere((t) => t.value.role == true && t.value.team == true)
-          .value;
+      return room.value!.players.entries.firstWhere((t) => t.value.role && t.value.team).value;
     } catch (_) {
       return null;
     }
@@ -43,9 +41,7 @@ class RoomController extends GetxController {
 
   Player? get orangeNarrator {
     try {
-      return room.value!.players.entries
-          .firstWhere((t) => t.value.role == true && t.value.team == false)
-          .value;
+      return room.value!.players.entries.firstWhere((t) => t.value.role && !t.value.team).value;
     } catch (_) {
       return null;
     }

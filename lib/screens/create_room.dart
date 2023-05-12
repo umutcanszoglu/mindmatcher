@@ -26,11 +26,16 @@ class CreateRoomPage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(24.0.w),
           child: ListView(
-            physics: const BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             children: [
               Text(
-                "CREATE ROOM",
+                "CREATE",
                 style: FontStyles.headers,
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                "ROOM",
+                style: FontStyles.headers.copyWith(color: orange),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 48.h),
@@ -59,7 +64,15 @@ class CreateRoomPage extends StatelessWidget {
                             maskType: EasyLoadingMaskType.black,
                           );
                         } else {
-                          Get.to(const CategoryPage());
+                          if (controller.username.text.length > 8) {
+                            EasyLoading.showToast(
+                              "your username cannot be more than 8 characters",
+                              duration: const Duration(seconds: 1),
+                              maskType: EasyLoadingMaskType.black,
+                            );
+                          } else {
+                            Get.to(const CategoryPage());
+                          }
                         }
                       },
                     ),
@@ -121,7 +134,15 @@ class CreateRoomPage extends StatelessWidget {
                                             maskType: EasyLoadingMaskType.black,
                                           );
                                         } else {
-                                          controller.joinRoom();
+                                          if (controller.username.text.length > 8) {
+                                            EasyLoading.showToast(
+                                              "your username cannot be more than 8 characters",
+                                              duration: const Duration(seconds: 1),
+                                              maskType: EasyLoadingMaskType.black,
+                                            );
+                                          } else {
+                                            controller.joinRoom();
+                                          }
                                         }
                                       },
                                     ),
