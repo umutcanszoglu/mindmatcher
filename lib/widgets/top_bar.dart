@@ -32,7 +32,7 @@ class TopBarWidget extends GetView<RoomController> {
                 backgroundColor: white,
                 title: Text(
                   "Players",
-                  style: FontStyles.bodyBlack,
+                  style: FontStyles.header2.copyWith(color: black),
                   textAlign: TextAlign.center,
                 ),
                 content: Obx(
@@ -78,17 +78,48 @@ class TopBarWidget extends GetView<RoomController> {
                 actionsPadding: EdgeInsets.only(bottom: 16.h, left: 24.w, right: 24.w),
                 actionsAlignment: MainAxisAlignment.center,
                 backgroundColor: white,
-                title: Text(
-                  "Game Logs",
-                  style: FontStyles.bodyBlack,
-                  textAlign: TextAlign.center,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Game",
+                      style: FontStyles.header2,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(width: 8.w),
+                    Text(
+                      "Logs",
+                      style: FontStyles.header2.copyWith(color: orange),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    ...controller.room.value!.gameLogs.map((kv) => Text(
-                        "${kv.team ? 'Purple' : 'Orange'} - ${kv.name} - ${kv.answer}",
-                        style: FontStyles.smallButtonBlack))
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      width: 350,
+                      height: 300,
+                      decoration: BoxDecoration(
+                        color: dirtyWhite,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: ListView(
+                        physics:
+                            const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                        children: [
+                          ...controller.room.value!.gameLogs.map(
+                            (kv) => Text(
+                              "${kv.name} / ${kv.answer}",
+                              style:
+                                  FontStyles.bodyBlack.copyWith(color: kv.team ? purple : orange),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),

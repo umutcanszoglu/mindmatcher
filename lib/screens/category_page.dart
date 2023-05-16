@@ -35,7 +35,7 @@ class CategoryPage extends StatelessWidget {
                       Obx(
                         () => SizedBox(
                           width: double.infinity.w,
-                          height: (Get.height / 1.5).h,
+                          height: (Get.height / 1.35).h,
                           child: ListView(
                             physics: const BouncingScrollPhysics(),
                             children: controller.categories
