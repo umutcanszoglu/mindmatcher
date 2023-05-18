@@ -15,7 +15,7 @@ const blue = Color.fromARGB(255, 155, 203, 230);
 class FontStyles {
   static TextStyle headers = GoogleFonts.righteous(
     color: purple,
-    fontSize: 64,
+    fontSize: 64.sp,
     textStyle: TextStyle(
       shadows: [
         Shadow(

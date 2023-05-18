@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/consts/theme.dart';
 
@@ -11,9 +12,9 @@ class RulesCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        width: Get.width / 6,
-        height: 40,
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        width: (Get.width / 6).w,
+        height: 40.h,
         decoration: BoxDecoration(
           color: dirtyWhite,
           borderRadius: BorderRadius.circular(16),

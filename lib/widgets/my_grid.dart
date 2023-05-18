@@ -17,8 +17,8 @@ class MyGrid extends GetView<RoomController> {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            crossAxisSpacing: 4.0.h,
-            mainAxisSpacing: 4.0.w,
+            crossAxisSpacing: 4.0.w,
+            mainAxisSpacing: 4.0.h,
             maxCrossAxisExtent: Get.width * 0.2,
           ),
           children: room!.words.entries
@@ -30,6 +30,9 @@ class MyGrid extends GetView<RoomController> {
                     return GameCard(
                       model: kv.value,
                       show: user.role || kv.value.isOpen,
+                      isOpen: kv.value.isOpen,
+                      user: user,
+                      word: kv.value.word,
                       onTap: () {
                         controller.openWord(kv.value);
                       },

@@ -17,7 +17,7 @@ void main() async {
   EasyLoading.instance
     ..indicatorType = EasyLoadingIndicatorType.ring
     ..textStyle = FontStyles.smallButtonwhite;
-  //Animate.restartOnHotReload = true;
+  //Animate.restartOnHotReload = false;
   runApp(const MyApp());
 }
 

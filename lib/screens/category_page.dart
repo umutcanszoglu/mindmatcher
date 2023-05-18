@@ -17,69 +17,72 @@ class CategoryPage extends StatelessWidget {
     final controller = Get.put(CategoryController());
     final roomController = Get.find<RoomController>();
 
-    return Scaffold(
-      backgroundColor: white,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 48.0.w, vertical: 24.h),
-          child: Obx(
-            () => controller.isLoading.value
-                ? const Center(
-                    child: CupertinoActivityIndicator(),
-                  )
-                : ListView(
-                    physics: const BouncingScrollPhysics(),
-                    children: [
-                      Text("Category", style: FontStyles.headers, textAlign: TextAlign.center),
-                      SizedBox(height: 32.h),
-                      Obx(
-                        () => SizedBox(
-                          width: double.infinity.w,
-                          height: (Get.height / 1.35).h,
-                          child: ListView(
-                            physics: const BouncingScrollPhysics(),
-                            children: controller.categories
-                                .asMap()
-                                .entries
-                                .map(
-                                  (e) => Padding(
-                                    padding: EdgeInsets.only(bottom: 8.0.h),
-                                    child: CategoryCard(
-                                      model: e.value,
-                                      onTap: () {
-                                        e.value.isSelected = !e.value.isSelected;
-                                        controller.categories.refresh();
-                                      },
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: white,
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 48.0.w, vertical: 24.h),
+            child: Obx(
+              () => controller.isLoading.value
+                  ? const Center(
+                      child: CupertinoActivityIndicator(),
+                    )
+                  : ListView(
+                      physics: const BouncingScrollPhysics(),
+                      children: [
+                        Text("Category", style: FontStyles.headers, textAlign: TextAlign.center),
+                        SizedBox(height: 32.h),
+                        Obx(
+                          () => SizedBox(
+                            width: double.infinity.w,
+                            height: (Get.height * 0.65).h,
+                            child: ListView(
+                              physics: const BouncingScrollPhysics(),
+                              children: controller.categories
+                                  .asMap()
+                                  .entries
+                                  .map(
+                                    (e) => Padding(
+                                      padding: EdgeInsets.only(bottom: 8.0.h),
+                                      child: CategoryCard(
+                                        model: e.value,
+                                        onTap: () {
+                                          e.value.isSelected = !e.value.isSelected;
+                                          controller.categories.refresh();
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                )
-                                .toList(),
+                                  )
+                                  .toList(),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 32.h),
-                      MyButton(
-                        color: orange,
-                        width: double.infinity.w,
-                        height: 60.h,
-                        text: "Next",
-                        textStyle: FontStyles.buttons,
-                        onTap: () async {
-                          EasyLoading.show(maskType: EasyLoadingMaskType.clear);
-                          final words = await controller.getGameWords();
-                          if (words.isEmpty) {
-                            EasyLoading.showToast(
-                              "Select Category",
-                              duration: const Duration(seconds: 1),
-                            );
-                          } else {
-                            roomController.wordModels = roomController.getWordModels(words);
-                            roomController.createRoom();
-                          }
-                        },
-                      ),
-                    ],
-                  ),
+                        SizedBox(height: 32.h),
+                        MyButton(
+                          color: orange,
+                          width: double.infinity.w,
+                          height: 60.h,
+                          text: "Next",
+                          textStyle: FontStyles.buttons,
+                          onTap: () async {
+                            EasyLoading.show(maskType: EasyLoadingMaskType.clear);
+                            final words = await controller.getGameWords();
+                            if (words.isEmpty) {
+                              EasyLoading.showToast(
+                                "Select Category",
+                                duration: const Duration(seconds: 1),
+                              );
+                            } else {
+                              roomController.wordModels = roomController.getWordModels(words);
+                              roomController.createRoom();
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+            ),
           ),
         ),
       ),

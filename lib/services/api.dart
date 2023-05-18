@@ -144,9 +144,12 @@ class Api {
     }
   }
 
-  static Future<bool> openWord(String roomUid, String word) async {
+  static Future<bool> openWord(String roomUid, String word, String name) async {
     try {
-      await _firestore.collection("rooms").doc(roomUid).update({"words.$word.isOpen": true});
+      await _firestore
+          .collection("rooms")
+          .doc(roomUid)
+          .update({"words.$word.isOpen": true, "words.$word.name": name});
       return true;
     } catch (_) {
       return false;

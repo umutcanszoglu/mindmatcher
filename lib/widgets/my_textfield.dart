@@ -18,6 +18,8 @@ class MyTextField extends StatelessWidget {
     this.borderColor = orange,
     this.keyboardType,
     this.controller,
+    this.limit,
+    this.counter,
   });
   final String? hintText;
   final Color? textColor;
@@ -33,15 +35,19 @@ class MyTextField extends StatelessWidget {
   final Color borderColor;
   final TextInputType? keyboardType;
   final TextEditingController? controller;
+  final int? limit;
+  final Widget? counter;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
       keyboardType: keyboardType,
+      maxLength: limit,
       obscureText: isObscure,
       style: TextStyle(color: textColor),
       decoration: InputDecoration(
+        counter: counter,
         filled: isFilled,
         fillColor: fillColor,
         iconColor: iconColor,

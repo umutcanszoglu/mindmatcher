@@ -14,8 +14,7 @@ class UserCard extends GetView<RoomController> {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        width: Get.width / 4,
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         height: 40.h,
         decoration: BoxDecoration(
           color: dirtyWhite,
@@ -31,6 +30,7 @@ class UserCard extends GetView<RoomController> {
                   color: black,
                 ),
               ),
+              SizedBox(width: 4.w),
               Icon(Icons.circle, size: 20, color: controller.user.team ? purple : orange),
             ],
           ),

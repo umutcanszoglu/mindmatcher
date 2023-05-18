@@ -5,10 +5,12 @@ class WordModel {
   String word;
   String type;
   bool isOpen;
+  String name;
   WordModel({
     required this.word,
     required this.type,
     required this.isOpen,
+    required this.name,
   });
 
   Map<String, dynamic> toMap() {
@@ -16,6 +18,7 @@ class WordModel {
       'word': word,
       'type': type,
       'isOpen': isOpen,
+      'name': name,
     };
   }
 
@@ -24,6 +27,7 @@ class WordModel {
       word: map['word'] as String,
       type: map['type'] as String,
       isOpen: map['isOpen'] as bool,
+      name: map['name'] as String,
     );
   }
 

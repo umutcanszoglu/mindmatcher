@@ -91,7 +91,14 @@ class RoomController extends GetxController {
     );
 
     final roomUID = joinKey.text.trim();
-    await Api.addPlayerToRoom(roomUID, player);
+    final res = await Api.addPlayerToRoom(roomUID, player);
+    if (!res) {
+      EasyLoading.showToast(
+        "Incorrect key",
+        maskType: EasyLoadingMaskType.black,
+        duration: const Duration(seconds: 1),
+      );
+    }
 
     listenRoom(roomUID);
   }
@@ -141,19 +148,19 @@ class RoomController extends GetxController {
     final wm = SplayTreeMap<String, WordModel>();
     for (int i = 0; i < words.length; i++) {
       if (i >= 24) {
-        final model = WordModel(word: words[i], type: "b", isOpen: false);
+        final model = WordModel(word: words[i], type: "b", isOpen: false, name: "");
         wm[words[i]] = model;
       }
       if (i >= 16 && i < 24) {
-        final model = WordModel(word: words[i], type: "w", isOpen: false);
+        final model = WordModel(word: words[i], type: "w", isOpen: false, name: "");
         wm[words[i]] = model;
       }
       if (i >= 8 && i < 16) {
-        final model = WordModel(word: words[i], type: "o", isOpen: false);
+        final model = WordModel(word: words[i], type: "o", isOpen: false, name: "");
         wm[words[i]] = model;
       }
       if (i < 8) {
-        final model = WordModel(word: words[i], type: "p", isOpen: false);
+        final model = WordModel(word: words[i], type: "p", isOpen: false, name: "");
         wm[words[i]] = model;
       }
     }
@@ -189,11 +196,10 @@ class RoomController extends GetxController {
 
     if (user.role || room.roleTurn || user.team != room.teamTurn) return;
 
-    final hasOpen = await Api.openWord(room.uid, word.word);
+    final hasOpen = await Api.openWord(room.uid, word.word, user.name);
+    log("opened ${word.word}");
 
     if (hasOpen && ((room.teamTurn && word.type != "p") || (!room.teamTurn && word.type != "o"))) {
-      //if (word.type == "b") {}
-
       Api.switchTeamTurn(room.uid, !room.teamTurn);
       Api.switchRoleTurn(room.uid, !room.roleTurn);
     }
@@ -215,6 +221,13 @@ class RoomController extends GetxController {
       names.add(res);
     }
     return names;
+  }
+
+  void endGuessing() {
+    final room = this.room.value!;
+
+    Api.switchTeamTurn(room.uid, !room.teamTurn);
+    Api.switchRoleTurn(room.uid, !room.roleTurn);
   }
 
   void deleteRoom() async {

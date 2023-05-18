@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/consts/theme.dart';
@@ -57,18 +58,20 @@ class TopBarWidget extends GetView<RoomController> {
                   MyButton(
                     text: "Invite",
                     textStyle: FontStyles.buttons,
-                    color: blue,
+                    color: green,
                     height: 50.h,
                     onTap: () {
                       Share.share(controller.room.value?.uid ?? "");
                     },
                   )
+                      .animate(onPlay: (controller) => controller.repeat())
+                      .shimmer(delay: 300.ms, duration: 1800.ms)
                 ],
               ),
             );
           },
         ),
-        SizedBox(width: 4.w),
+        SizedBox(width: 8.w),
         //GameLog
         GameLogCard(
           onTap: () {
@@ -126,7 +129,7 @@ class TopBarWidget extends GetView<RoomController> {
             );
           },
         ),
-        SizedBox(width: 4.w),
+        SizedBox(width: 8.w),
         //Rules
         RulesCard(
           onTap: () {
@@ -169,7 +172,7 @@ class TopBarWidget extends GetView<RoomController> {
             );
           },
         ),
-        SizedBox(width: 45.w),
+        const Spacer(),
         //User
         UserCard(
           onTap: () {

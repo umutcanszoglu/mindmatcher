@@ -6,6 +6,7 @@ import 'package:mindmatcher/consts/icons.dart';
 import 'package:mindmatcher/consts/theme.dart';
 import 'package:mindmatcher/controllers/clue_controller.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
+import 'package:mindmatcher/widgets/end_guessing.dart';
 import 'package:mindmatcher/widgets/my_button.dart';
 import 'package:mindmatcher/widgets/my_textfield.dart';
 import 'package:type_text/type_text.dart';
@@ -24,8 +25,9 @@ class ClueWidget extends StatelessWidget {
         final color = controller.room.value?.teamTurn ?? false ? purple : orange;
 
         return Visibility(
-          visible: controller.user.role,
+          visible: controller.user.role && controller.room.value!.teamTurn == controller.user.team,
           replacement: AnimatedContainer(
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
             duration: const Duration(milliseconds: 300),
             width: double.infinity.w,
             height: 60.h,
@@ -33,15 +35,31 @@ class ClueWidget extends StatelessWidget {
               color: color,
               borderRadius: BorderRadius.circular(24),
             ),
-            child: Center(
-              child: TypeText(
-                duration: const Duration(seconds: 1),
-                controller.room.value!.gameLogs.isEmpty
-                    ? "github/umutcanszoglu"
-                    : "${controller.room.value!.teamTurn ? "Purple" : "Orange"} / ${controller.room.value!.roleTurn ? "narrator" : controller.room.value!.gameLogs.where((element) => element.role).last.answer}",
-                style: FontStyles.bodyWhite
-                    .copyWith(color: controller.room.value?.teamTurn ?? false ? white : black),
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                !controller.user.role && !controller.room.value!.roleTurn
+                    ? SizedBox(width: 32.w)
+                    : SizedBox(width: 0.w),
+                TypeText(
+                  duration: const Duration(seconds: 1),
+                  controller.room.value!.gameLogs.isEmpty
+                      ? "github/umutcanszoglu"
+                      : "${controller.room.value!.teamTurn ? "Purple" : "Orange"} / ${controller.room.value!.roleTurn ? "narrator" : controller.room.value!.gameLogs.where((element) => element.role).last.answer}",
+                  style: FontStyles.bodyWhite
+                      .copyWith(color: controller.room.value?.teamTurn ?? false ? white : black),
+                ),
+                !controller.user.role && !controller.room.value!.roleTurn
+                    ? const Spacer()
+                    : SizedBox(width: 0.w),
+                !controller.user.role && !controller.room.value!.roleTurn
+                    ? EndGuessing(
+                        onTap: () {
+                          controller.endGuessing();
+                        },
+                      )
+                    : SizedBox(width: 0.w),
+              ],
             ),
           ),
           child: Row(
@@ -53,6 +71,8 @@ class ClueWidget extends StatelessWidget {
                   prefixIconColor: color,
                   borderColor: white,
                   hintText: "Enter your clue.",
+                  limit: 8,
+                  counter: const SizedBox(),
                 ),
               ),
               SizedBox(width: 4.w),
@@ -65,6 +85,8 @@ class ClueWidget extends StatelessWidget {
                   prefixIconColor: color,
                   borderColor: white,
                   keyboardType: TextInputType.number,
+                  limit: 2,
+                  counter: const SizedBox(),
                 ),
               ),
               SizedBox(width: 8.w),
@@ -72,10 +94,16 @@ class ClueWidget extends StatelessWidget {
                 onTap: () {
                   if (controller.room.value!.teamTurn == controller.user.team &&
                       controller.room.value!.roleTurn) {
-                    controller.changeRoleTurn(false);
-                    controller.log(clueController.getClue());
-                    clueController.resetFields();
-                    EasyLoading.showToast("success");
+                    if (controller.room.value!.words.entries.any((e) => e.value.word
+                        .toLowerCase()
+                        .contains(clueController.clue.text.trim().toLowerCase()))) {
+                      EasyLoading.showToast("Your clue contains some game words!");
+                    } else {
+                      controller.changeRoleTurn(false);
+                      controller.log(clueController.getClue());
+                      clueController.resetFields();
+                      EasyLoading.showToast("success");
+                    }
                   } else {
                     if (controller.room.value!.teamTurn != controller.user.team) {
                       EasyLoading.showToast("Not your turn");
