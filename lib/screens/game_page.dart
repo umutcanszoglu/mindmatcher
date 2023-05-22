@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/consts/theme.dart';
@@ -18,44 +17,25 @@ class GamePage extends GetView<RoomController> {
       onWillPop: () async => false,
       child: Scaffold(
         backgroundColor: white,
+        resizeToAvoidBottomInset: true, //hiçbir şeyi hareket ettirmiyor. nice :)
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child: Obx(
               () => controller.room.value == null
                   ? const Center(child: CircularProgressIndicator())
-                  : Column(
+                  : ListView(
+                      physics: const BouncingScrollPhysics(),
                       children: [
-                        const TopBarWidget()
-                            .animate()
-                            .shimmer(delay: 300.ms, duration: 1800.ms)
-                            .slide(begin: const Offset(0, -3))
-                            .shake(hz: 4, curve: Curves.easeInOutCubic)
-                            .scaleXY(end: 1.1, duration: 600.ms)
-                            .then(delay: 600.ms)
-                            .scaleXY(end: 1 / 1.1),
+                        const TopBarWidget(),
                         SizedBox(height: 15.h),
                         const Flexible(
                           child: MyGrid(),
                         ),
                         SizedBox(height: 20.h),
-                        ClueWidget(controller: controller)
-                            .animate()
-                            .shimmer(delay: 300.ms, duration: 1800.ms)
-                            .slide(begin: const Offset(-1, 0))
-                            .shake(hz: 4, curve: Curves.easeInOutCubic)
-                            .scaleXY(end: 1.1, duration: 600.ms)
-                            .then(delay: 600.ms)
-                            .scaleXY(end: 1 / 1.1),
+                        ClueWidget(controller: controller),
                         SizedBox(height: 10.h),
-                        const TeamInfoCard()
-                            .animate()
-                            .shimmer(delay: 300.ms, duration: 1800.ms)
-                            .slide(begin: const Offset(1, 0))
-                            .shake(hz: 4, curve: Curves.easeInOutCubic)
-                            .scaleXY(end: 1.1, duration: 600.ms)
-                            .then(delay: 600.ms)
-                            .scaleXY(end: 1 / 1.1),
+                        const TeamInfoCard(),
                       ],
                     ),
             ),

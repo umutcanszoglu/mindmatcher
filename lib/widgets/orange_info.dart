@@ -40,6 +40,7 @@ class OrangeInfo extends StatelessWidget {
                 ? const Color.fromARGB(255, 139, 96, 210)
                 : Colors.amber,
             borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: controller.room.value!.teamTurn ? white : black, width: 2),
           ),
           child: ListView(
             physics: const BouncingScrollPhysics(),

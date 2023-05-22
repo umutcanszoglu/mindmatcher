@@ -13,6 +13,9 @@ class ClueController extends GetxController {
   }
 
   String getClue() {
+    if (count.text.trim() == "") {
+      count.text = "0";
+    }
     return "${clue.text.trim()} - ${count.text.trim()}";
   }
 

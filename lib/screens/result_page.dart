@@ -41,7 +41,7 @@ class ResultPage extends GetView<RoomController> {
                       controller.room.value!.winner == controller.user.team
                           ? "I know that winning is satisfying, but you still have to stay humble and support others. Helping and encouraging other people can be a greater victory than you."
                           : "What matters is the experience itself rather than the outcome of the game. We don't always win, but it's what we experience that matters. Losing is an important learning opportunity to be better next time.",
-                      duration: const Duration(seconds: 15),
+                      duration: const Duration(seconds: 5),
                       textAlign: TextAlign.center,
                       style: FontStyles.bodyBlack,
                     ),

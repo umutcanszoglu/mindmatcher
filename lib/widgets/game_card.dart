@@ -55,7 +55,7 @@ class GameCard extends GetView<RoomController> {
                           .team
                       ? blue
                       : black,
-                  width: 2)
+                  width: 3)
               : null,
           borderRadius: BorderRadius.circular(24),
         ),

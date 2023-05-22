@@ -23,9 +23,12 @@ class ClueWidget extends StatelessWidget {
     return Obx(
       () {
         final color = controller.room.value?.teamTurn ?? false ? purple : orange;
+        final room = controller.room.value!;
+        final user = controller.user;
+        final clue = clueController.clue.text.trim();
 
         return Visibility(
-          visible: controller.user.role && controller.room.value!.teamTurn == controller.user.team,
+          visible: user.role && room.roleTurn && room.teamTurn == user.team,
           replacement: AnimatedContainer(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             duration: const Duration(milliseconds: 300),
@@ -38,27 +41,23 @@ class ClueWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                !controller.user.role && !controller.room.value!.roleTurn
-                    ? SizedBox(width: 32.w)
-                    : SizedBox(width: 0.w),
+                !user.role && !room.roleTurn ? SizedBox(width: 24.w) : const SizedBox(),
                 TypeText(
                   duration: const Duration(seconds: 1),
-                  controller.room.value!.gameLogs.isEmpty
+                  room.gameLogs.isEmpty
                       ? "github/umutcanszoglu"
-                      : "${controller.room.value!.teamTurn ? "Purple" : "Orange"} / ${controller.room.value!.roleTurn ? "narrator" : controller.room.value!.gameLogs.where((element) => element.role).last.answer}",
+                      : "${room.teamTurn ? "Purple" : "Orange"} / ${room.roleTurn ? "Narrator Turn" : room.gameLogs.where((element) => element.role).last.answer}",
                   style: FontStyles.bodyWhite
                       .copyWith(color: controller.room.value?.teamTurn ?? false ? white : black),
                 ),
-                !controller.user.role && !controller.room.value!.roleTurn
-                    ? const Spacer()
-                    : SizedBox(width: 0.w),
-                !controller.user.role && !controller.room.value!.roleTurn
+                !user.role && !room.roleTurn ? const Spacer() : const SizedBox(),
+                !user.role && !room.roleTurn
                     ? EndGuessing(
                         onTap: () {
                           controller.endGuessing();
                         },
                       )
-                    : SizedBox(width: 0.w),
+                    : const SizedBox(),
               ],
             ),
           ),
@@ -92,12 +91,11 @@ class ClueWidget extends StatelessWidget {
               SizedBox(width: 8.w),
               MyButton(
                 onTap: () {
-                  if (controller.room.value!.teamTurn == controller.user.team &&
-                      controller.room.value!.roleTurn) {
-                    if (controller.room.value!.words.entries.any((e) => e.value.word
-                        .toLowerCase()
-                        .contains(clueController.clue.text.trim().toLowerCase()))) {
-                      EasyLoading.showToast("Your clue contains some game words!");
+                  if (room.teamTurn == user.team && room.roleTurn) {
+                    if (room.words.entries.any(
+                        (e) => e.value.word.trim().toLowerCase().contains(clue.toLowerCase()))) {
+                      EasyLoading.showToast(
+                          clue == "" ? "Give a clue" : "Your clue contains some game words!");
                     } else {
                       controller.changeRoleTurn(false);
                       controller.log(clueController.getClue());
@@ -105,7 +103,7 @@ class ClueWidget extends StatelessWidget {
                       EasyLoading.showToast("success");
                     }
                   } else {
-                    if (controller.room.value!.teamTurn != controller.user.team) {
+                    if (room.teamTurn != user.team) {
                       EasyLoading.showToast("Not your turn");
                     } else {
                       EasyLoading.showToast("Predictor's Turn");

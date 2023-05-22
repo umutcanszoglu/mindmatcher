@@ -28,8 +28,8 @@ class TeamInfoCard extends GetView<RoomController> {
             VerticalDivider(
               thickness: 2,
               color: controller.room.value?.teamTurn ?? false ? white : black,
-              indent: 32.w,
-              endIndent: 32.w,
+              indent: 40.w,
+              endIndent: 24.w,
             ),
             OrangeInfo(controller: controller),
           ],
