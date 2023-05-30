@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,7 @@ void main() async {
   EasyLoading.instance
     ..indicatorType = EasyLoadingIndicatorType.ring
     ..textStyle = FontStyles.smallButtonwhite;
-  //Animate.restartOnHotReload = false;
+  Animate.restartOnHotReload = false;
   runApp(const MyApp());
 }
 
@@ -35,9 +36,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
+          theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
           builder: EasyLoading.init(),
           home: const StartGamePage(),
         );

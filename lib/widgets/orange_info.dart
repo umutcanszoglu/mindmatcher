@@ -34,7 +34,7 @@ class OrangeInfo extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(4),
           width: 130.w,
-          height: 100.h,
+          height: 80.h,
           decoration: BoxDecoration(
             color: controller.room.value?.teamTurn ?? false
                 ? const Color.fromARGB(255, 139, 96, 210)
@@ -63,9 +63,22 @@ class OrangeInfo extends StatelessWidget {
           style: FontStyles.smallButtonwhite.copyWith(color: color),
         ),
         SizedBox(height: 4.h),
-        Text(
-          controller.orangeNarrator?.name ?? "🎤🗿",
-          style: FontStyles.smallButtonwhite.copyWith(color: color),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.w),
+          decoration: BoxDecoration(
+            color: controller.room.value?.teamTurn ?? false
+                ? const Color.fromARGB(255, 139, 96, 210)
+                : Colors.amber,
+            border: Border.all(
+                color: controller.room.value?.teamTurn ?? false ? white : black, width: 2),
+            borderRadius: BorderRadius.circular(32),
+          ),
+          child: Text(
+            controller.orangeNarrator?.name ?? "🎤🗿",
+            style: FontStyles.smallButtonwhite.copyWith(
+              color: controller.room.value?.teamTurn ?? false ? white : black,
+            ),
+          ),
         ),
       ],
     );

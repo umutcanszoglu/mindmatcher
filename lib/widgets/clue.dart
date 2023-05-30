@@ -12,11 +12,9 @@ import 'package:mindmatcher/widgets/my_textfield.dart';
 import 'package:type_text/type_text.dart';
 
 class ClueWidget extends StatelessWidget {
-  const ClueWidget({
-    super.key,
-    required this.controller,
-  });
+  const ClueWidget({super.key, required this.controller});
   final RoomController controller;
+
   @override
   Widget build(BuildContext context) {
     final clueController = Get.put(ClueController());
@@ -25,7 +23,6 @@ class ClueWidget extends StatelessWidget {
         final color = controller.room.value?.teamTurn ?? false ? purple : orange;
         final room = controller.room.value!;
         final user = controller.user;
-        final clue = clueController.clue.text.trim();
 
         return Visibility(
           visible: user.role && room.roleTurn && room.teamTurn == user.team,
@@ -45,7 +42,7 @@ class ClueWidget extends StatelessWidget {
                 TypeText(
                   duration: const Duration(seconds: 1),
                   room.gameLogs.isEmpty
-                      ? "github/umutcanszoglu"
+                      ? "Orange Narrator Is Expected"
                       : "${room.teamTurn ? "Purple" : "Orange"} / ${room.roleTurn ? "Narrator Turn" : room.gameLogs.where((element) => element.role).last.answer}",
                   style: FontStyles.bodyWhite
                       .copyWith(color: controller.room.value?.teamTurn ?? false ? white : black),
@@ -92,10 +89,13 @@ class ClueWidget extends StatelessWidget {
               MyButton(
                 onTap: () {
                   if (room.teamTurn == user.team && room.roleTurn) {
-                    if (room.words.entries.any(
-                        (e) => e.value.word.trim().toLowerCase().contains(clue.toLowerCase()))) {
-                      EasyLoading.showToast(
-                          clue == "" ? "Give a clue" : "Your clue contains some game words!");
+                    if (room.words.entries.any((e) => e.value.word
+                        .trim()
+                        .toLowerCase()
+                        .contains(clueController.clueText.toLowerCase()))) {
+                      EasyLoading.showToast(clueController.clueText.isEmpty
+                          ? "Give a clue"
+                          : "Your clue contains some game words!");
                     } else {
                       controller.changeRoleTurn(false);
                       controller.log(clueController.getClue());

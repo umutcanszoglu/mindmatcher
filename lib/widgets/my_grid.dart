@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,11 +24,11 @@ class MyGrid extends GetView<RoomController> {
             maxCrossAxisExtent: Get.width * 0.2,
           ),
           children: room!.words.entries
+              .skip(max(room.words.length, 25) - 25)
               .map(
                 (kv) => Obx(
                   () {
                     final user = controller.user;
-
                     return GameCard(
                       model: kv.value,
                       show: user.role || kv.value.isOpen,

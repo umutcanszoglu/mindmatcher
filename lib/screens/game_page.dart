@@ -17,7 +17,6 @@ class GamePage extends GetView<RoomController> {
       onWillPop: () async => false,
       child: Scaffold(
         backgroundColor: white,
-        resizeToAvoidBottomInset: true, //hiçbir şeyi hareket ettirmiyor. nice :)
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -25,13 +24,10 @@ class GamePage extends GetView<RoomController> {
               () => controller.room.value == null
                   ? const Center(child: CircularProgressIndicator())
                   : ListView(
-                      physics: const BouncingScrollPhysics(),
                       children: [
                         const TopBarWidget(),
                         SizedBox(height: 15.h),
-                        const Flexible(
-                          child: MyGrid(),
-                        ),
+                        const MyGrid(),
                         SizedBox(height: 20.h),
                         ClueWidget(controller: controller),
                         SizedBox(height: 10.h),

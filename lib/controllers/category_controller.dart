@@ -38,6 +38,7 @@ class CategoryController extends GetxController {
   Future<List<String>> getGameWords() async {
     await wordPool();
     final wordList = <String>[];
+
     gameWords.shuffle();
     for (int i = 0; i < gameWords.length / selectedCategories.length; i++) {
       wordList.add(gameWords[i]);

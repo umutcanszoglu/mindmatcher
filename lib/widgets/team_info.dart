@@ -15,8 +15,7 @@ class TeamInfoCard extends GetView<RoomController> {
       () => AnimatedContainer(
         padding: const EdgeInsets.all(16),
         duration: const Duration(milliseconds: 300),
-        width: double.infinity.w,
-        height: 270.h,
+        height: (Get.height / 3.1).h,
         decoration: BoxDecoration(
           color: controller.room.value?.teamTurn ?? false ? purple : orange,
           borderRadius: BorderRadius.circular(24),

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mindmatcher/consts/theme.dart';
 import 'package:mindmatcher/controllers/category_controller.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
+import 'package:mindmatcher/screens/exit_page.dart';
 import 'package:mindmatcher/services/api.dart';
 import 'package:mindmatcher/widgets/game_log.dart';
 import 'package:mindmatcher/widgets/my_button.dart';
@@ -42,7 +45,9 @@ class TopBarWidget extends GetView<RoomController> {
                     children: [
                       ...controller.room.value!.players.entries.map(
                         (e) => Chip(
-                          elevation: 5.0,
+                          elevation: 3.0,
+                          backgroundColor: white,
+                          shadowColor: black,
                           avatar:
                               Icon(Icons.circle, size: 20, color: e.value.team ? purple : orange),
                           label: Text(
@@ -112,14 +117,17 @@ class TopBarWidget extends GetView<RoomController> {
                         physics:
                             const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                         children: [
-                          ...controller.room.value!.gameLogs.map(
-                            (kv) => Text(
-                              "${kv.name} / ${kv.answer}",
-                              style:
-                                  FontStyles.bodyBlack.copyWith(color: kv.team ? purple : orange),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
+                          if (controller.room.value!.gameLogs.isNotEmpty)
+                            ...controller.room.value!.gameLogs.map(
+                              (kv) => Text(
+                                "${kv.name} / ${kv.answer}",
+                                style:
+                                    FontStyles.bodyBlack.copyWith(color: kv.team ? purple : orange),
+                                textAlign: TextAlign.center,
+                              ),
+                            )
+                          else
+                            Lottie.asset("assets/lotties/empty.json"),
                         ],
                       ),
                     ),
@@ -201,8 +209,8 @@ class TopBarWidget extends GetView<RoomController> {
                       SizedBox(height: 8.h),
                       Text(
                         controller.user.role ? "Role: Narrator" : "Role: Predictor",
-                        style: FontStyles.bodyBlack
-                            .copyWith(color: controller.user.role ? red : green),
+                        style: FontStyles.bodyBlack.copyWith(
+                            color: controller.user.role ? const Color(0xff3F497F) : green),
                       ),
                       SizedBox(height: 16.h),
                       MyButton(
@@ -224,7 +232,7 @@ class TopBarWidget extends GetView<RoomController> {
                           if (controller.visibility.value)
                             Expanded(
                               child: MyButton(
-                                color: red,
+                                color: const Color(0xff3F497F),
                                 text: "Narrator",
                                 width: 120.w,
                                 height: 40.h,
@@ -235,35 +243,148 @@ class TopBarWidget extends GetView<RoomController> {
                               ),
                             ),
                           if (controller.visibility.value) SizedBox(width: 8.w),
-                          Expanded(
-                            child: MyButton(
-                              color: green,
-                              text: "Predictor",
-                              width: 120.w,
-                              height: 40.h,
-                              textStyle: FontStyles.buttons,
-                              onTap: () {
-                                controller.selectRole(false);
-                              },
+                          if (!controller.visibility.value)
+                            Expanded(
+                              child: MyButton(
+                                color: green,
+                                text: "Predictor",
+                                width: 120.w,
+                                height: 40.h,
+                                textStyle: FontStyles.buttons,
+                                onTap: () {
+                                  controller.selectRole(false);
+                                },
+                              ),
                             ),
-                          ),
                         ],
                       ),
                       SizedBox(height: 16.h),
                       if (controller.user.name == controller.room.value!.creator)
-                        MyButton(
-                          text: "Reset",
-                          textStyle: FontStyles.buttons
-                              .copyWith(color: controller.user.team ? white : black),
-                          color: controller.user.team ? purple : orange,
-                          width: 100.w,
-                          height: 40.h,
-                          onTap: () async {
-                            final words = await catController.getGameWords();
+                        Row(
+                          children: [
+                            Expanded(
+                              child: MyButton(
+                                text: "Reset",
+                                textStyle: FontStyles.buttons
+                                    .copyWith(color: controller.user.team ? white : black),
+                                color: controller.user.team ? purple : orange,
+                                width: double.infinity,
+                                height: 40.h,
+                                onTap: () {
+                                  Get.dialog(
+                                    AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(32),
+                                      ),
+                                      actionsPadding:
+                                          EdgeInsets.only(bottom: 16.h, left: 24.w, right: 24.w),
+                                      actionsAlignment: MainAxisAlignment.center,
+                                      backgroundColor: white,
+                                      title: Text(
+                                        "Reset",
+                                        style: FontStyles.header2.copyWith(color: black),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      content: Row(
+                                        children: [
+                                          Expanded(
+                                            child: MyButton(
+                                              text: "Reset",
+                                              textStyle: FontStyles.buttons.copyWith(color: white),
+                                              color: red,
+                                              width: double.infinity,
+                                              height: 40.h,
+                                              onTap: () async {
+                                                EasyLoading.show(
+                                                    maskType: EasyLoadingMaskType.black);
 
-                            await Api.resetWords(controller.room.value?.uid ?? "",
-                                controller.getWordModels(words), controller.getPlayersNames());
-                          },
+                                                final words = await catController.getGameWords();
+
+                                                await Api.resetWords(
+                                                    controller.room.value?.uid ?? "",
+                                                    controller.getWordModels(words),
+                                                    controller.getPlayersNames());
+                                                EasyLoading.dismiss();
+
+                                                Get.back();
+                                                Get.back();
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(width: 8.w),
+                                          Expanded(
+                                            child: MyButton(
+                                              text: "Back",
+                                              textStyle: FontStyles.buttons.copyWith(color: white),
+                                              color: green,
+                                              width: double.infinity,
+                                              height: 40.h,
+                                              onTap: Get.back,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 8.w),
+                            Expanded(
+                              child: MyButton(
+                                text: "Exit",
+                                textStyle: FontStyles.buttons.copyWith(color: white),
+                                color: red,
+                                width: double.infinity,
+                                height: 40.h,
+                                onTap: () {
+                                  Get.dialog(
+                                    AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(32),
+                                      ),
+                                      actionsPadding:
+                                          EdgeInsets.only(bottom: 16.h, left: 24.w, right: 24.w),
+                                      actionsAlignment: MainAxisAlignment.center,
+                                      backgroundColor: white,
+                                      title: Text(
+                                        "Exit",
+                                        style: FontStyles.header2.copyWith(color: black),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      content: Row(
+                                        children: [
+                                          Expanded(
+                                            child: MyButton(
+                                              text: "Exit",
+                                              textStyle: FontStyles.buttons.copyWith(color: white),
+                                              color: red,
+                                              width: double.infinity,
+                                              height: 40.h,
+                                              onTap: () {
+                                                Get.to(const ExitPage());
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(width: 8.w),
+                                          Expanded(
+                                            child: MyButton(
+                                              text: "Back",
+                                              textStyle: FontStyles.buttons.copyWith(color: white),
+                                              color: green,
+                                              width: double.infinity,
+                                              height: 40.h,
+                                              onTap: Get.back,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                     ],
                   ),

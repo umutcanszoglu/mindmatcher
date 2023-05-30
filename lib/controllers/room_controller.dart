@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:mindmatcher/models/game_log_model.dart';
@@ -61,7 +62,7 @@ class RoomController extends GetxController {
       winner: false,
     );
 
-    myName = username.text.trim();
+    myName = username.text.trim().replaceAll(".", "");
 
     final player = Player(
       name: myName,
@@ -82,7 +83,7 @@ class RoomController extends GetxController {
     }
   }
 
-  void joinRoom() async {
+  Future<void> joinRoom() async {
     myName = username.text.trim();
     final player = Player(
       name: myName,
@@ -140,7 +141,7 @@ class RoomController extends GetxController {
 
     if (wasNull) {
       EasyLoading.dismiss();
-      Get.to(const GamePage());
+      Get.off(const GamePage());
     }
   }
 
@@ -185,6 +186,7 @@ class RoomController extends GetxController {
 
   void changeTeamTurn(bool turn) {
     Api.switchTeamTurn(room.value?.uid ?? "", turn);
+    HapticFeedback.heavyImpact();
   }
 
   void changeRoleTurn(bool turn) {
@@ -202,6 +204,7 @@ class RoomController extends GetxController {
     if (hasOpen && ((room.teamTurn && word.type != "p") || (!room.teamTurn && word.type != "o"))) {
       Api.switchTeamTurn(room.uid, !room.teamTurn);
       Api.switchRoleTurn(room.uid, !room.roleTurn);
+      HapticFeedback.heavyImpact();
     }
   }
 
@@ -228,6 +231,7 @@ class RoomController extends GetxController {
 
     Api.switchTeamTurn(room.uid, !room.teamTurn);
     Api.switchRoleTurn(room.uid, !room.roleTurn);
+    HapticFeedback.heavyImpact();
   }
 
   void deleteRoom() async {
@@ -244,5 +248,29 @@ class RoomController extends GetxController {
     username.dispose();
     joinKey.dispose();
     super.onClose();
+  }
+
+  void join() async {
+    final name = username.text.trim();
+
+    if (name.isEmpty) {
+      EasyLoading.showToast(
+        "Please enter username.",
+        duration: const Duration(seconds: 1),
+        maskType: EasyLoadingMaskType.black,
+      );
+    } else {
+      if (name.length > 8) {
+        EasyLoading.showToast(
+          "Your username cannot be more than 8 characters",
+          duration: const Duration(seconds: 1),
+          maskType: EasyLoadingMaskType.black,
+        );
+      } else {
+        EasyLoading.show();
+        await joinRoom();
+        EasyLoading.dismiss();
+      }
+    }
   }
 }

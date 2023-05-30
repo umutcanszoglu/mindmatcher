@@ -40,7 +40,7 @@ class MyTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       maxLength: limit,
@@ -63,6 +63,7 @@ class MyTextField extends StatelessWidget {
           borderSide: BorderSide(color: borderColor, width: 1),
           borderRadius: BorderRadius.circular(32),
         ),
+
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: borderColor, width: 1),
           borderRadius: BorderRadius.circular(32),
