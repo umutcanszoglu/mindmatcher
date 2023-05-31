@@ -127,7 +127,16 @@ class TopBarWidget extends GetView<RoomController> {
                               ),
                             )
                           else
-                            Lottie.asset("assets/lotties/empty.json"),
+                            Column(
+                              children: [
+                                Lottie.asset("assets/lotties/empty.json", height: 200),
+                                Text(
+                                  "There isn't logs in here yet.",
+                                  style: FontStyles.bodyBlack,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
                         ],
                       ),
                     ),
