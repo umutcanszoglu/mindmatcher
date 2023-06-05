@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:mindmatcher/consts/theme.dart';
 import 'package:mindmatcher/controllers/room_controller.dart';
 import 'package:mindmatcher/widgets/my_button.dart';
-import 'package:type_text/type_text.dart';
 
 class ResultPage extends GetView<RoomController> {
   const ResultPage({super.key});
@@ -18,7 +17,7 @@ class ResultPage extends GetView<RoomController> {
         body: Padding(
           padding: EdgeInsets.all(24.0.w),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
                 padding: const EdgeInsets.all(24),
@@ -37,11 +36,10 @@ class ResultPage extends GetView<RoomController> {
                           .copyWith(color: controller.user.team ? purple : orange),
                     ),
                     SizedBox(height: 24.h),
-                    TypeText(
+                    Text(
                       controller.room.value!.winner == controller.user.team
                           ? "I know that winning is satisfying, but you still have to stay humble and support others. Helping and encouraging other people can be a greater victory than you."
                           : "What matters is the experience itself rather than the outcome of the game. We don't always win, but it's what we experience that matters. Losing is an important learning opportunity to be better next time.",
-                      duration: const Duration(seconds: 5),
                       textAlign: TextAlign.center,
                       style: FontStyles.bodyBlack,
                     ),
@@ -58,6 +56,7 @@ class ResultPage extends GetView<RoomController> {
                   ],
                 ),
               ),
+              Image.asset("assets/images/mm.png", width: 150),
             ],
           ),
         ),
